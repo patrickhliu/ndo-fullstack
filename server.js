@@ -1,22 +1,26 @@
 import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-
 import { fileURLToPath } from 'url';
-const path = require('path');
+import routes from './routes/routes.js';
 
+const require = createRequire(import.meta.url);
+const path = require('path');
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const http = require('http');
 const fs = require('fs');
+const express = require("express");
+const app = express();
+
+app.use('/nintendo', routes);
 
 // https://medium.com/@carla.de.beer/configuring-your-react-app-for-aws-elastic-beanstalk-1f2e02171629
 
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 8080;
-
+console.log('pat1');
 const server = http.createServer((req, res) => {
     let filePath = path.join(__dirname, 'client/dist', req.url === '/' ? 'index.html' : req.url);
+    console.log(filePath);
     const extname = path.extname(filePath);
     const contentType = getContentType(extname);
 
