@@ -26,6 +26,11 @@ const reactPath = path.join(__dirname, 'client/dist');
 console.log(reactPath);
 app.use(express.static(reactPath));
 
+app.use((req, res, next) => {
+    res.setHeader('Vary', 'Origin');
+    next();
+});
+
 app.get('/', (req, res) => {
     res.send('Welcome to my Express app 3908!');
 });
