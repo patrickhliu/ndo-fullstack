@@ -14,7 +14,7 @@ const port = 8080;
 
 // allow react to access this backend...
 const corsOptions = {
-  origin: ['http://ndo-fullstack-env.eba-vxxhp62q.us-west-1.elasticbeanstalk.com', "http://localhost:5173",]
+  origin: ['ndo-fullstack-env.eba-vxxhp62q.us-west-1.elasticbeanstalk.com', "localhost:5173",]
 }
 app.use(cors(corsOptions))
 
