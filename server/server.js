@@ -3,7 +3,11 @@ const require = createRequire(import.meta.url);
 
 //import sequelize from './config/db.js';
 import routes from './routes/routes.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const express = require("express");
 const app = express();
 const port = 8080;
@@ -14,10 +18,14 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use('/nintendo', routes);
-app.use(express.static(path.join(__dirname, 'client/dist')));
+//app.use(express.static(path.join(__dirname, 'client/dist')));
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+const reactPath = path.join(__dirname, '..', 'client/dist');;
+
+app.use(express.static(reactPath));
+
+app.all('/{*splat}', (req, res) => {
+    app.use(express.static(reactPath));
 });
 
 /* if (app.cache) {
