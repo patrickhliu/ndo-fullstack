@@ -1,5 +1,6 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
+const helmet = require('helmet');
 
 //import sequelize from './config/db.js';
 import routes from './routes/routes.js';
@@ -16,7 +17,8 @@ const corsOptions = {
     origin: "http://localhost:5173",    // allow react to access this backend...
 };
 
-app.use(cors(corsOptions));
+app.use(helmet());
+//app.use(cors(corsOptions));
 app.use('/nintendo', routes);
 //app.use(express.static(path.join(__dirname, 'client/dist')));
 
