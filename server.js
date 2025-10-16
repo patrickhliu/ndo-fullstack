@@ -26,6 +26,14 @@ const reactPath = path.join(__dirname, 'client/dist');
 console.log(reactPath);
 app.use(express.static(reactPath));
 
+app.get('/', (req, res) => {
+    res.send('Welcome to my Express app!');
+});
+
+app.get('/test', async (req, res, next) => {
+    res.send("hello from test....")
+});
+
 app.all('/{*splat}', (req, res) => {
     app.use(express.static(reactPath));
 });
