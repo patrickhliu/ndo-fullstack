@@ -10,6 +10,5 @@ export const getAll = async(req, res) => {
         },
     });
 
-    console.log(result);
-    res.json(result.data);
+    res.json(result);
 };
