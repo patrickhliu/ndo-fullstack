@@ -1,0 +1,34 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+import sequelize from './../config/db.js';
+const { DataTypes, Model } = require('sequelize');
+
+class NintendoGame extends Model {}
+
+NintendoGame.init(
+  {
+    // Model attributes are defined here
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+  },
+  {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'NintendoGame', // We need to choose the model name
+    tableName: 'nintendo_games',
+    timestamps: false,
+  },
+);
+
+// the defined model is the class itself
+console.log(NintendoGame === sequelize.models.NintendoGame); // true
+
+export default NintendoGame;

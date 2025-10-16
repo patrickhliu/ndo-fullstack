@@ -9,7 +9,7 @@ function App() {
   const [fruits, setFruits] = useState([]);
 
   const fetchApi = async () => {
-    const res = await axios.get("http://localhost:8080/api");
+    const res = await axios.get("http://localhost:8080/nintendo/all");
     console.log(res);
     setFruits(res.data);
   }
