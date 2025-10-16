@@ -38,6 +38,10 @@ app.get("/fruits", async (req, res) => {
     res.json({ fruits: ["apple", "orange", "banana"] });
 });
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+});
+
 /* app.all('/{*splat}', (req, res) => {
     app.use(express.static(reactPath));
 }); */
