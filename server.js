@@ -34,6 +34,10 @@ app.get('/test', async (req, res, next) => {
     res.send("hello from test 3908....")
 });
 
+app.get("/fruits", async (req, res) => {
+    res.json({ fruits: ["apple", "orange", "banana"] });
+});
+
 /* app.all('/{*splat}', (req, res) => {
     app.use(express.static(reactPath));
 }); */
@@ -49,12 +53,6 @@ app.get('/test', async (req, res, next) => {
     }
   }
 } */
-
-
-
-/* app.get("/api", async (req, res) => {
-    res.json({ fruits: ["apple", "orange"] });
-}); */
 
 app.listen(port, () => {
   console.log(`SERVER RUNNING ON PORT ${port}`);
