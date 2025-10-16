@@ -3,12 +3,20 @@ import routes from './routes/routes.js';
 import { fileURLToPath } from 'url';
 
 const require = createRequire(import.meta.url);
+
+const cors = require("cors");
 const path = require('path');
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const express = require("express");
 const app = express();
 const port = 8080;
+
+// allow react to access this backend...
+const corsOptions = {
+  origin: ['http://ndo-fullstack-env.eba-vxxhp62q.us-west-1.elasticbeanstalk.com', "http://localhost:5173",]
+}
+app.use(cors(corsOptions))
 
 const reactPath = path.join(__dirname, 'client/dist');
 console.log(reactPath);
