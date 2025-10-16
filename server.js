@@ -27,16 +27,16 @@ console.log(reactPath);
 app.use(express.static(reactPath));
 
 app.get('/', (req, res) => {
-    res.send('Welcome to my Express app!');
+    res.send('Welcome to my Express app 3908!');
 });
 
 app.get('/test', async (req, res, next) => {
-    res.send("hello from test....")
+    res.send("hello from test 3908....")
 });
 
-app.all('/{*splat}', (req, res) => {
+/* app.all('/{*splat}', (req, res) => {
     app.use(express.static(reactPath));
-});
+}); */
 
 /* if (app.cache) {
   // To clear the cache for a specific view:
