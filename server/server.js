@@ -3,7 +3,7 @@ const require = createRequire(import.meta.url);
 
 //import sequelize from './config/db.js';
 import routes from './routes/routes.js';
-import path from 'path';
+const path = require('path');
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
