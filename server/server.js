@@ -15,6 +15,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use('/nintendo', routes);
 app.use(express.static(path.join(__dirname, 'client/dist')));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
 /* if (app.cache) {
   // To clear the cache for a specific view:
   delete app.cache['path/to/your/view.pug'];
