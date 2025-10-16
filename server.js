@@ -38,7 +38,7 @@ app.get("/fruits", async (req, res) => {
     res.json({ fruits: ["apple", "orange", "banana"] });
 });
 
-app.get('*', (req, res) => {
+app.all('/{*any}', (req, res, next) => {
     res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
 });
 
