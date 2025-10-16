@@ -22,8 +22,8 @@ app.use(helmet());
 app.use('/nintendo', routes);
 //app.use(express.static(path.join(__dirname, 'client/dist')));
 
-const reactPath = path.join(__dirname, '..', 'client/dist');;
-
+const reactPath = path.join(__dirname, '..', 'client/dist');
+console.log(reactPath);
 app.use(express.static(reactPath));
 
 app.all('/{*splat}', (req, res) => {
