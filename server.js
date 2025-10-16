@@ -14,6 +14,8 @@ const reactPath = path.join(__dirname, 'client/dist');
 console.log(reactPath);
 app.use(express.static(reactPath));
 
+app.use('/nintendo', routes);
+
 app.get('*all', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
 });
