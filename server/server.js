@@ -14,7 +14,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use('/nintendo', routes);
-
+app.use(express.static(path.join(__dirname, 'client/dist')));
 /* if (app.cache) {
   // To clear the cache for a specific view:
   delete app.cache['path/to/your/view.pug'];
