@@ -1,68 +1,63 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const helmet = require('helmet');
 
-//import sequelize from './config/db.js';
-import routes from './routes/routes.js';
-const path = require('path');
 import { fileURLToPath } from 'url';
+const path = require('path');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const express = require("express");
-const app = express();
-const port = 8080;
-const cors = require("cors");
-const corsOptions = {
-    origin: "http://localhost:5173",    // allow react to access this backend...
-};
 
-app.use(helmet());
-//app.use(cors(corsOptions));
-app.use('/nintendo', routes);
-//app.use(express.static(path.join(__dirname, 'client/dist')));
+const http = require('http');
+const fs = require('fs');
 
-const reactPath = path.join(__dirname, 'client/dist');
-console.log(reactPath);
-app.use(express.static(reactPath));
+// https://medium.com/@carla.de.beer/configuring-your-react-app-for-aws-elastic-beanstalk-1f2e02171629
 
-app.use((req, res, next) => {
-    res.setHeader('Vary', 'Origin');
-    next();
-});
+const hostname = '127.0.0.1';
+const port = process.env.PORT || 8080;
 
-app.get('/', (req, res) => {
-    res.send('Welcome to my Express app 3908!');
-});
+const server = http.createServer((req, res) => {
+    let filePath = path.join(__dirname, 'client/dist', req.url === '/' ? 'index.html' : req.url);
+    const extname = path.extname(filePath);
+    const contentType = getContentType(extname);
 
-app.get('/test', async (req, res, next) => {
-    res.send("hello from test 3908....")
-});
-
-app.get("/fruits", async (req, res) => {
-    res.json({ fruits: ["apple", "orange", "banana"] });
-});
-
-app.all('/{*any}', (req, res, next) => {
-    res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
-});
-
-/* app.all('/{*splat}', (req, res) => {
-    app.use(express.static(reactPath));
-}); */
-
-/* if (app.cache) {
-  // To clear the cache for a specific view:
-  delete app.cache['path/to/your/view.pug'];
-
-  // To clear the entire view cache:
-  for (const key in app.cache) {
-    if (app.cache.hasOwnProperty(key)) {
-      delete app.cache[key];
+    if (fs.existsSync(filePath)) {
+        try {
+            const content = fs.readFileSync(filePath);
+            res.writeHead(200, {'Content-Type': contentType});
+            res.end(content);
+        } catch (err) {
+            res.writeHead(500);
+            res.end('Server Error');
+        }
+    } else {
+        res.writeHead(404);
+        res.end('Not Found');
     }
-  }
-} */
+});
 
-app.listen(port, () => {
-  console.log(`SERVER RUNNING ON PORT ${port}`);
+function getContentType(extname) {
+    switch (extname) {
+        case '.js':
+            return 'text/javascript';
+        case '.css':
+            return 'text/css';
+        case '.json':
+            return 'application/json';
+        case '.png':
+            return 'image/png';
+        case '.jpg':
+            return 'image/jpeg';
+        case '.gif':
+            return 'image/gif';
+        case '.svg':
+            return 'image/svg+xml';
+        default:
+            return 'text/html';
+    }
+}
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+}).on('error', err => {
+    console.error('Server error:', err);
 });
