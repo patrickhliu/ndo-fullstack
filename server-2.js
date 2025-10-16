@@ -8,10 +8,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const http = require('http');
 const fs = require('fs');
-const express = require("express");
-const app = express();
+//const express = require("express");
+//const app = express();
 
-app.use('/nintendo', routes);
+//app.use('/nintendo', routes);
 
 // https://medium.com/@carla.de.beer/configuring-your-react-app-for-aws-elastic-beanstalk-1f2e02171629
 
