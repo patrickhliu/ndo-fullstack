@@ -53,7 +53,7 @@ export const getAll = async(req, res) => {
             release_future_days: (release_date > now) ? Math.round(Math.abs(((Math.floor(release_date.getTime())) - now) / oneDay)) : null,
             platform_code : o.platform_code,
             current_price: o.sale_price,
-            regular_price: o.reg_price,
+            regular_price: o.regular_price,
             discount_percent: !o.sale_price ? 0 : Math.ceil(((o.reg_price - o.sale_price) / o.reg_price) * 100),
             discount_ends: !discountEnds ? null : Math.round(Math.abs((discountEnds - now) / oneDay)),
             availability: "hard code",
