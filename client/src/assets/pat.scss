@@ -1,0 +1,38 @@
+.pointer {
+    cursor: pointer;
+}
+
+.bg-steel-blue {
+    background-color: #4682B4 !important;
+    color: white !important; /* Adjust text color for contrast */
+}
+
+.bg-forest-green {
+    background-color: #228B22 !important;
+    color:#fff !important;
+}
+
+.bg-khaki {
+    background-color: #F0E68C !important;
+    color:#111 !important;
+}
+
+.bg-cherry-inv {
+    background-color: #fff !important;
+    color:#D2042D !important;
+    border:2px solid #D2042D;
+}
+
+.font-14 {
+    font-size:14px;
+}
+
+.font-16 {
+    font-size:16px;
+}
+
+.card-img-sq {
+    width:250px;
+    height:250px;
+    object-fit: contain;
+}

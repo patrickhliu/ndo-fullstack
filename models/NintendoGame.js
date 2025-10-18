@@ -1,7 +1,7 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 import sequelize from './../config/db.js';
-const { DataTypes, Model } = require('sequelize');
+const { Sequelize, Op, DataTypes, Model } = require('sequelize');
 
 class NintendoGame extends Model {}
 
@@ -15,8 +15,36 @@ NintendoGame.init(
         autoIncrement: true
     },
     title: {
-      type: DataTypes.STRING,
-      allowNull: true,
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    top_level_filters: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    product_image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    product_image_square: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    release_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    platform_code: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    sale_price: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+    },
+    regular_price: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
     },
   },
   {
