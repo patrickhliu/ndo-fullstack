@@ -23,16 +23,33 @@
     border:2px solid #D2042D;
 }
 
+.bg-desert {
+    background-color: #FAD5A5;
+    color:#111 !important;
+}
+
 .font-14 {
     font-size:14px;
+    font-family:"Tahoma", serif;
 }
 
 .font-16 {
     font-size:16px;
+    font-family:"Tahoma", serif;
+}
+
+.font-18 {
+    font-size:18px;
+    font-family:"Tahoma", serif;
+}
+
+.font-20 {
+    font-size:20px;
+    font-family:"Tahoma", serif;
 }
 
 .card-img-sq {
-    width:250px;
-    height:250px;
+    width:500px;
+    height:281px;
     object-fit: contain;
 }

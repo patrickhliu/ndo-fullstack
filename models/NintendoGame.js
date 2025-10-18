@@ -46,6 +46,10 @@ NintendoGame.init(
         type: DataTypes.DECIMAL,
         allowNull: true,
     },
+    price_range: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
   },
   {
     // Other model options go here

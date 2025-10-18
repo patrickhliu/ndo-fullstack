@@ -32,7 +32,7 @@ export const getAll = async(req, res) => {
     logger.info(JSON.stringify(dbResults));
 
     for(let o of dbResults) {
-        console.log(o);
+        //console.log(o);
 
         const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
         const oneDay = 1000 * 60 * 60 * 24;
@@ -43,16 +43,20 @@ export const getAll = async(req, res) => {
 
         if(o.sale_price) {
             discountEnds = o.eshopDetails.discountPriceEndTimestamp * 1000;
+        } else {
+
+            // is it free?
+            //if(o.price_range == "Free to start") o.sale_price = "FREE";
         }
 
         let game = {
             photo_url: o.product_image_square ? o.product_image_square : "https://assets.nintendo.com/image/upload/ar_16:9,w_500/" + o.product_image,
-            title: o.title,
+            title: o.title.replace(/™|®|©/g, ''),
             release_date: release_date.toLocaleString('en-US', options),
             release_future: release_date > now,
             release_future_days: (release_date > now) ? Math.round(Math.abs(((Math.floor(release_date.getTime())) - now) / oneDay)) : null,
             platform_code : o.platform_code,
-            current_price: o.sale_price,
+            sale_price: o.sale_price,
             regular_price: o.regular_price,
             discount_percent: !o.sale_price ? 0 : Math.ceil(((o.reg_price - o.sale_price) / o.reg_price) * 100),
             discount_ends: !discountEnds ? null : Math.round(Math.abs((discountEnds - now) / oneDay)),
@@ -63,6 +67,8 @@ export const getAll = async(req, res) => {
         output.push(game);
 
     }
+
+    logger.info(JSON.stringify(output));
 
     // {results:[], count:{}, total_pages:0}
     res.json({
