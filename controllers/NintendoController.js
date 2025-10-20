@@ -25,8 +25,43 @@ export const getAll = async(req, res) => {
 
     let output = [];
 
-    let dbResults = await NintendoGame.findAll({
+    /* let dbResults = await NintendoGame.findAll({
         where: sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1)
+    }); */
+
+    // if(str == "games") str = "(NOT topLevelFilters:'DLC' AND NOT topLevelFilters:'Games with DLC' AND NOT topLevelFilters:'Upgrade pack')";
+
+   /* ITEM_NUMBER: {
+        $or: [{
+           $notLike: 'MF%'
+        }, {
+           $notLike: 'OLS%'
+        }, {
+           $notLike: 'MV%'
+        }, {
+           $notLike: 'MD%'
+        }, {
+           $notLike: 'AE%'
+        }]
+    }, */
+
+    let dbResults = await NintendoGame.findAll({
+        where: {
+            top_level_filters: {
+                [Op.and]: [
+                    { [Op.notLike]: 'Upgrade Pack' },
+                    { [Op.notLike]: 'DLC' },
+                    { [Op.notLike]: 'Games with DLC' },
+                ],
+            },
+            /* sale_price: {
+                [Op.ne]: null
+            }, */
+            software_publisher: {
+                [Op.eq]: "Nintendo",
+            },
+        },
+        limit: 1000,
     });
 
     logger.info(JSON.stringify(dbResults));
@@ -41,15 +76,14 @@ export const getAll = async(req, res) => {
         let release_date = new Date(o.release_date);
         let discountEnds = null;
 
-        if(o.sale_price) {
-            discountEnds = o.eshopDetails.discountPriceEndTimestamp * 1000;
-        } else {
+        if(o.nsuid == '70010000002722') console.log(o);
 
-            // is it free?
-            //if(o.price_range == "Free to start") o.sale_price = "FREE";
+        if(o.sale_price) {
+            discountEnds = o.discount_price_end_timestamp * 1000;
         }
 
         let game = {
+            nsuid: o.nsuid,
             photo_url: o.product_image_square ? o.product_image_square : "https://assets.nintendo.com/image/upload/ar_16:9,w_500/" + o.product_image,
             title: o.title.replace(/™|®|©/g, ''),
             release_date: release_date.toLocaleString('en-US', options),
@@ -58,9 +92,11 @@ export const getAll = async(req, res) => {
             platform_code : o.platform_code,
             sale_price: o.sale_price,
             regular_price: o.regular_price,
-            discount_percent: !o.sale_price ? 0 : Math.ceil(((o.reg_price - o.sale_price) / o.reg_price) * 100),
+            discount_percent: !o.percent_off ? null : parseInt(o.percent_off),
             discount_ends: !discountEnds ? null : Math.round(Math.abs((discountEnds - now) / oneDay)),
             availability: "hard code",
+            is_physical: o.is_physical,
+            is_digital: o.is_digital,
         }
 
         //console.log(game);

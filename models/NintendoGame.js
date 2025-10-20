@@ -14,6 +14,10 @@ NintendoGame.init(
         primaryKey: true,
         autoIncrement: true
     },
+    nsuid:  {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     title: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -49,6 +53,22 @@ NintendoGame.init(
     price_range: {
         type: DataTypes.STRING,
         allowNull: true,
+    },
+    percent_off: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+    },
+    discount_price_end_timestamp: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+    },
+    is_physical: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+    },
+    is_digital: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
     },
   },
   {

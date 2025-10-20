@@ -17,15 +17,27 @@
     color:#111 !important;
 }
 
-.bg-cherry-inv {
-    background-color: #fff !important;
-    color:#D2042D !important;
-    border:2px solid #D2042D;
+.bg-cherry {
+    background-color: #D2042D !important;
+    color:#fff !important;
 }
 
-.bg-desert {
-    background-color: #FAD5A5;
+.bg-cherry-br {
+    background-color: #D2042D !important;
+    color:#fff !important;
+    border:2px solid #fff !important;
+}
+
+.bg-cherry-inv-br {
+    background-color: #fff !important;
+    color:#D2042D !important;
+    border:2px solid #D2042D !important;;
+}
+
+.bg-black-br {
+    background-color: #fff !important;
     color:#111 !important;
+    border:2px solid #111 !important;
 }
 
 .font-14 {
@@ -49,7 +61,7 @@
 }
 
 .card-img-sq {
-    width:500px;
-    height:281px;
+    width:200px;
+    height:200px;
     object-fit: contain;
 }

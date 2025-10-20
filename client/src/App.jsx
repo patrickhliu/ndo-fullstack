@@ -45,27 +45,29 @@ function App() {
             <div class="col-lg-8 offset-lg-2">
                 { currentTab == 1 &&  apiResponse.results.length > 0 && apiResponse.results.map((obj, i) =>
                     <Card key={i} style={{  }} className="mt-3">
-                        <Card.Title className="bg-desert py-2 ps-2" style={{ margin:0 }}>
-                            <span>{obj.title}</span>
+                        <Card.Title className="bg-cherry m-0 p-0 py-2" style={{ margin:0 }}>
+                            <p className="m-0 p-0 py-2 ms-3 d-inline-block" style={{ width:"max-content" }}>{obj.title}</p>
+                            <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-heart me-3"></i></p>
+                            <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-star me-3"></i></p>
                         </Card.Title>
                         <Card.Body className="row">
-                            <div className="col-lg-4">
-                                { obj.photo_url && <Card.Img className="card-img-sq" variant="top" src={obj.photo_url} /> }
-                            </div>
-                            <div className="col-lg-8">
-                                { obj.platform_code == "NINTENDO_SWITCH" && <Badge className="my-3" bg="danger"><p className="m-0 font-16">Switch</p></Badge> }
-                                { obj.platform_code == "NINTENDO_SWITCH_2" && <Badge className="my-3 bg-cherry-inv" bg=""><p className="m-0 font-16">Switch <i className="fa-solid fa-2"></i></p></Badge> }
-                                <br/>
-                                { obj.release_future && <p className=" font-18"><i class="fa-regular fa-clock" style={{ display: 'inline' }}>
-                                    <span className="ms-2 font-18">{obj.release_date} ({obj.release_future_days} Days)</span></i></p> }
-                                { !obj.release_future && <p className="font-18">{obj.release_date}</p> }
+                            { obj.photo_url && <Card.Img className="card-img-sq" variant="top" src={obj.photo_url} /> }
+                            <div className="col-lg-8" style={{ border:"1px solid green"}}>
+                                { obj.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-18" bg="cherry-br">Switch</Badge> }
+                                { obj.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-18" bg="cherry-inv-br">Switch <i className="fa-solid fa-2"></i></Badge> }
 
-                                <i class="fa-solid fa-tag" style={{ display: 'inline' }}></i>
-                                { !obj.sale_price && !obj.regular_price && <p className="font-20 ms-2" style={{ display: 'inline-block' }}>FREE</p> }
-                                { !obj.sale_price && obj.regular_price && <p className="font-20 ms-2" style={{ display: 'inline-block' }}>${obj.regular_price}</p> }
-                                { obj.sale_price && obj.regular_price && <p className="font-20 ms-2" style={{ textDecoration: 'line-through', display:'inline-block' }}>${obj.regular_price}</p> }
-                                { obj.sale_price && <Badge bg="" className="font-20 bg-forest-green ms-2">${obj.sale_price}</Badge>}
-                                { obj.sale_price && <Badge bg="" className="font-20 bg-khaki ms-2"><i className="fa-solid fa-arrow-trend-down"></i> - {obj.discount_percent}%</Badge>}
+                                { !obj.release_future && <p className="font-18 m-0 mt-3 ms-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-regular fa-calendar fa-lg me-2"></i><span className="d-inline-block">{obj.release_date}</span></p> }
+                                { obj.release_future && <p className="font-18 m-0 mt-3 ms-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-regular fa-clock fa-lg me-2"><span className="d-inline-block">{obj.release_date} ({obj.release_future_days} Days)</span></i></p> }
+                                <br/>
+                                {/* { !obj.sale_price && !obj.regular_price && <p className="font-18 ms-2" style={{ display: 'inline-block' }}>FREE</p> } */}
+                                { !obj.sale_price && obj.regular_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-solid fa-tag fa-lg me-2"></i><span>${obj.regular_price}</span></p> }
+                                { obj.sale_price && obj.regular_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-solid fa-tag fa-lg me-2"></i><span style={{ textDecoration: 'line-through' }}>${obj.regular_price}</span></p> }
+                                { obj.sale_price && obj.regular_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><span>${obj.sale_price}</span></p>}
+                                { obj.sale_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-regular fa-circle-down me-2"></i><span>{obj.discount_percent}%</span></p> }
+                                { obj.sale_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><span>Discount Ends In {obj.discount_ends} Days</span></p> }
+                                <br/>
+                                { obj.is_digital && <Badge className="font-14 mt-3 me-4 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Digital</Badge> }
+                                { obj.is_physical && <Badge className="font-14 mt-3 me-4 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Physical</Badge> }
                             </div>
                         </Card.Body>
                     </Card>
@@ -81,7 +83,7 @@ function App() {
                             <b style={{ fontSize: '16px', }}>{obj.title}</b>
                             <br/>
                             { obj.platform_code == "NINTENDO_SWITCH" && <Badge className="mt-2" bg="danger"><span className="font-14">Switch</span></Badge> }
-                            { obj.platform_code == "NINTENDO_SWITCH_2" && <Badge className="mt-2 bg-cherry-inv" bg=""><span className="font-14">Switch <i className="fa-solid fa-2"></i></span></Badge> }
+                            { obj.platform_code == "NINTENDO_SWITCH_2" && <Badge className="mt-2" bg="cherry-inv"><span className="font-14">Switch <i className="fa-solid fa-2"></i></span></Badge> }
                             <p className="mt-2 font-14">
                                 { obj.release_future && <span><i>Available {obj.release_date} ({obj.release_future_days} Days)</i></span> }
                                 { !obj.release_future && <span>Released {obj.release_date}</span> }
