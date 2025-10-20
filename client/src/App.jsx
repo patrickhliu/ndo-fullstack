@@ -46,7 +46,7 @@ function App() {
                 { currentTab == 1 &&  apiResponse.results.length > 0 && apiResponse.results.map((obj, i) =>
                     <Card key={i} style={{  }} className="mt-3">
                         <Card.Title className="bg-cherry m-0 p-0 py-2" style={{ margin:0 }}>
-                            <p className="m-0 p-0 py-2 ms-3 d-inline-block" style={{ width:"max-content" }}>{obj.title}</p>
+                            <p className="m-0 p-0 py-2 ms-3 d-inline-block" style={{ width:"max-content" }}><b>{obj.title}</b></p>
                             <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-heart me-3"></i></p>
                             <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-star me-3"></i></p>
                         </Card.Title>
@@ -56,18 +56,27 @@ function App() {
                                 { obj.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-18" bg="cherry-br">Switch</Badge> }
                                 { obj.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-18" bg="cherry-inv-br">Switch <i className="fa-solid fa-2"></i></Badge> }
 
-                                { !obj.release_future && <p className="font-18 m-0 mt-3 ms-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-regular fa-calendar fa-lg me-2"></i><span className="d-inline-block">{obj.release_date}</span></p> }
-                                { obj.release_future && <p className="font-18 m-0 mt-3 ms-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-regular fa-clock fa-lg me-2"><span className="d-inline-block">{obj.release_date} ({obj.release_future_days} Days)</span></i></p> }
+                                { !obj.release_future && <Badge className="font-18 mt-3 ms-3 d-inline-block" bg="black-br"><i class="fa-regular fa-calendar-days me-2"></i>{obj.release_date}</Badge> }
+                                { obj.release_future && <Badge className="font-18 mt-3 ms-3 d-inline-block" bg="black-br"><i class="fa-solid fa-hourglass-start me-2"></i>{obj.release_date} (In {obj.release_future_days} Days)</Badge> }
+                                { obj.availability.includes("Pre-order") && <Badge className="font-18 mt-3 ms-3 d-inline-block" bg="black-br">Pre-Order</Badge> }
+                                { obj.availability.includes("New releases") && <Badge className="font-18 mt-3 ms-3 d-inline-block" bg="black-br">New Release</Badge> }
+                                { obj.photo_gallery.length > 0 && <Badge className="font-18 mt-3 ms-3 d-inline-block" bg="black-br">Photos</Badge> }
                                 <br/>
-                                {/* { !obj.sale_price && !obj.regular_price && <p className="font-18 ms-2" style={{ display: 'inline-block' }}>FREE</p> } */}
-                                { !obj.sale_price && obj.regular_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-solid fa-tag fa-lg me-2"></i><span>${obj.regular_price}</span></p> }
-                                { obj.sale_price && obj.regular_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-solid fa-tag fa-lg me-2"></i><span style={{ textDecoration: 'line-through' }}>${obj.regular_price}</span></p> }
-                                { obj.sale_price && obj.regular_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><span>${obj.sale_price}</span></p>}
-                                { obj.sale_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><i class="fa-regular fa-circle-down me-2"></i><span>{obj.discount_percent}%</span></p> }
-                                { obj.sale_price && <p className="font-18 m-0 mt-3 me-4 d-inline-block" style={{ width:"max-content" }}><span>Discount Ends In {obj.discount_ends} Days</span></p> }
+                                { !obj.sale_price && obj.regular_price && <Badge className="font-18 mt-3 me-4 d-inline-block" bg="black-br"><i class="fa-solid fa-tag me-2"></i>${obj.regular_price}</Badge> }
+                                { obj.sale_price && obj.regular_price && <Badge className="font-18 mt-3 me-4 d-inline-block" bg="khaki-br"><i class="fa-solid fa-tag me-2"></i>
+                                    <span style={{ textDecoration: 'line-through' }}>${obj.regular_price}</span>
+                                    <span className="ms-3">${obj.sale_price}</span>
+                                    <i class="fa-regular fa-circle-down ms-3"></i><span>{obj.discount_percent}%</span>
+                                    <span className="ms-3"><i>Discount Ends In {obj.discount_ends} Days</i></span>
+                                </Badge> }
                                 <br/>
-                                { obj.is_digital && <Badge className="font-14 mt-3 me-4 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Digital</Badge> }
-                                { obj.is_physical && <Badge className="font-14 mt-3 me-4 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Physical</Badge> }
+                                { obj.is_digital && obj.file_size && <Badge className="font-18 mt-3 me-4 d-inline-block" bg="black-br"><i class="fa-solid fa-cloud-arrow-down me-2"></i>Digital - {obj.file_size}</Badge> }
+                                { obj.is_digital && !obj.file_size && <Badge className="font-18 mt-3 me-4 d-inline-block" bg="black-br"><i class="fa-solid fa-cloud-arrow-down me-2"></i>Digital</Badge> }
+                                { obj.is_physical && <Badge className="font-18 mt-3 me-4 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Physical</Badge> }
+                                <br/>
+                                { obj.software_publisher && <Badge className="font-16 mt-3 me-4 d-inline-block" bg="black-br">Published By {obj.software_publisher}</Badge> }
+                                <br/>
+                                { obj.software_developer && <Badge className="font-16 mt-3 me-4 d-inline-block" bg="black-br">Developed By {obj.software_developer}</Badge> }
                             </div>
                         </Card.Body>
                     </Card>

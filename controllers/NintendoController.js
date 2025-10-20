@@ -45,22 +45,34 @@ export const getAll = async(req, res) => {
         }]
     }, */
 
+    let addedLikeOperator = ["Coming soon"].map((word) => ({ [Op.iLike]: `%${word || ""}%` })) //this line will add iLike operator for each string
+
     let dbResults = await NintendoGame.findAll({
         where: {
-            top_level_filters: {
+            /* top_level_filters: {
                 [Op.and]: [
                     { [Op.notLike]: 'Upgrade Pack' },
                     { [Op.notLike]: 'DLC' },
                     { [Op.notLike]: 'Games with DLC' },
                 ],
             },
-            /* sale_price: {
-                [Op.ne]: null
-            }, */
+            sale_price: {
+                [Op.ne]: null,
+            },
+             dlc_type: {
+                [Op.eq]: null,
+            },
+            is_upgrade: {
+                [Op.eq]: false,
+            },
             software_publisher: {
                 [Op.eq]: "Nintendo",
-            },
+            }, */
         },
+        where: sequelize.where(
+            //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
+            sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"New releases"\''), ), 1
+        ),
         limit: 1000,
     });
 
@@ -75,11 +87,20 @@ export const getAll = async(req, res) => {
         let now = Date.now(); // already in ms...
         let release_date = new Date(o.release_date);
         let discountEnds = null;
+        let photoGallery = [];
+        let videoGallery = [];
 
-        if(o.nsuid == '70010000002722') console.log(o);
+        //if(o.nsuid == '70010000002722') console.log(o);
 
         if(o.sale_price) {
             discountEnds = o.discount_price_end_timestamp * 1000;
+        }
+
+        if(o.product_gallery) {
+            for(let m of o.product_gallery) {
+                if(m.resourceType == "image") photoGallery.push("https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + m.publicId);
+                if(m.resourceType == "video") videoGallery.push("https://assets.nintendo.com/image/upload/ar_16:9,w_500/" + m.publicId);
+            }
         }
 
         let game = {
@@ -94,9 +115,14 @@ export const getAll = async(req, res) => {
             regular_price: o.regular_price,
             discount_percent: !o.percent_off ? null : parseInt(o.percent_off),
             discount_ends: !discountEnds ? null : Math.round(Math.abs((discountEnds - now) / oneDay)),
-            availability: "hard code",
+            availability: o.availability,
             is_physical: o.is_physical,
             is_digital: o.is_digital,
+            file_size: o.file_size,
+            software_publisher: o.software_publisher,
+            software_developer: o.software_developer,
+            photo_gallery: photoGallery,
+            video_gallery: videoGallery,
         }
 
         //console.log(game);

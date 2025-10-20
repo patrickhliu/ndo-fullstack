@@ -22,8 +22,48 @@ NintendoGame.init(
         type: DataTypes.STRING,
         allowNull: true,
     },
-    top_level_filters: {
-        type: DataTypes.JSON,
+    content_rating: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    content_rating_system: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    regular_price: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+    },
+    final_price: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+    },
+    sale_price: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+    },
+    amount_off: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+    },
+    percent_off: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+    },
+    price_range: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    discount_price_end: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    discount_price_end_timestamp: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+    },
+    platform_code: {
+        type: DataTypes.STRING,
         allowNull: true,
     },
     product_image: {
@@ -34,41 +74,145 @@ NintendoGame.init(
         type: DataTypes.STRING,
         allowNull: true,
     },
+    product_gallery: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
     release_date: {
         type: DataTypes.DATE,
         allowNull: true,
     },
-    platform_code: {
+    sku: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    sale_price: {
-        type: DataTypes.DECIMAL,
+    top_level_filters: {
+        type: DataTypes.JSON,
         allowNull: true,
     },
-    regular_price: {
-        type: DataTypes.DECIMAL,
-        allowNull: true,
-    },
-    price_range: {
+    url: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    percent_off: {
-        type: DataTypes.DECIMAL,
+    url_key: {
+        type: DataTypes.STRING,
         allowNull: true,
     },
-    discount_price_end_timestamp: {
-        type: DataTypes.BIGINT,
+    demo_nsuid: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    dlc_type: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    has_dlc: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    is_digital: {
+        type: DataTypes.BOOLEAN,
         allowNull: true,
     },
     is_physical: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
     },
-    is_digital: {
+    is_upgrade: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
+    },
+    is_exclusive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    is_featured: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    is_shovelware: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    availability: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    software_developer: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    software_publisher: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    franchises: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    created_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    updated_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    nintendo_updated_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    content_descriptors: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    player_count: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    play_modes: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    tag_labels: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    top_level_category: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    top_level_category_code: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    visible_in_search: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    genres: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    game_genre_labels: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    game_feature_labels: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    nso_features: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    ways_to_play_labels: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    },
+    file_size: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
   },
   {
