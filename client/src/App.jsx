@@ -3,11 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/navbar/navbar';
 import Searchbar from './components/searchbar/searchbar';
 import Pagination from './components/pagination/pagination';
+import PhotoGallery from './components/photoGallery/photoGallery';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 import './assets/pat.scss';
+
 
 function App() {
     const [currentTab, setCurrentTab] = useState(1);
@@ -79,6 +81,7 @@ function App() {
                                 { obj.software_developer && <Badge className="font-16 mt-3 me-4 d-inline-block" bg="black-br">Developed By {obj.software_developer}</Badge> }
                             </div>
                         </Card.Body>
+                        <PhotoGallery photos={obj.photo_gallery}></PhotoGallery>
                     </Card>
                 )}
             </div>

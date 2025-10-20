@@ -98,7 +98,22 @@ export const getAll = async(req, res) => {
 
         if(o.product_gallery) {
             for(let m of o.product_gallery) {
-                if(m.resourceType == "image") photoGallery.push("https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + m.publicId);
+                /* largeURL:
+                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg',
+              thumbnailURL:
+                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg',
+              width: 1875,
+              height: 2500, */
+
+
+                if(m.resourceType == "image") {
+                    photoGallery.push({
+                        url: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + m.publicId,
+                        width:1280,
+                        height:720,
+                    });
+                }
+
                 if(m.resourceType == "video") videoGallery.push("https://assets.nintendo.com/image/upload/ar_16:9,w_500/" + m.publicId);
             }
         }
