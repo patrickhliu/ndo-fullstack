@@ -15,10 +15,10 @@ function photoGallery(props) {
     const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Swiper className="swiper-container" modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]} slidesPerView={1} scrollbar={true}>
+    <Swiper className="w-100" modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]} slidesPerView={1} scrollbar={true}>
     {props.photos.map((p, i) => (
-        <SwiperSlide className="swiper-slide" key={i}>
-            <img src={p.src} className="swiper-photo pointer m-0 p-0 col-xs-12" onClick={() => setIsOpen(true)}></img>
+        <SwiperSlide className="w-100" key={i}>
+            <img src={p.src} className="w-100 pointer m-0 p-0" onClick={() => setIsOpen(true)}></img>
         </SwiperSlide>
     ))}
     <Lightbox open={isOpen} close={() => setIsOpen(false)} slides={props.photos} />

@@ -71,20 +71,3 @@
     height:250px;
     object-fit: contain;
 }
-
-.swiper-container {
-    width: 720px;
-    height: 405px;
-    /* border-radius: 5%; */
-
-    .swiper-slide {
-
-
-        .swiper-photo {
-            width: 100%; /* Ensures image doesn't overflow */
-            height: auto; /* Maintains aspect ratio */
-            /* object-fit: contain;
-            object-position: center; */
-        }
-    }
-}

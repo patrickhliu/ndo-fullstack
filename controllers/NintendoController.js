@@ -49,15 +49,15 @@ export const getAll = async(req, res) => {
 
     let dbResults = await NintendoGame.findAll({
         where: {
+            sale_price: {
+                [Op.ne]: null,
+            },
             /* top_level_filters: {
                 [Op.and]: [
                     { [Op.notLike]: 'Upgrade Pack' },
                     { [Op.notLike]: 'DLC' },
                     { [Op.notLike]: 'Games with DLC' },
                 ],
-            },
-            sale_price: {
-                [Op.ne]: null,
             },
              dlc_type: {
                 [Op.eq]: null,
@@ -67,10 +67,10 @@ export const getAll = async(req, res) => {
             },
             software_publisher: {
                 [Op.eq]: "Nintendo",
-            }, */
+            },
             is_physical: {
                 [Op.eq]: true,
-            },
+            },*/
         },
         /* where: sequelize.where(
             //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
@@ -139,6 +139,8 @@ export const getAll = async(req, res) => {
             software_developer: o.software_developer,
             photo_gallery: photoGallery,
             video_gallery: videoGallery,
+            url: o.url,
+            url_key: o.url_key,
         }
 
         //console.log(game);

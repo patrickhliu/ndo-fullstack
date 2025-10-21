@@ -43,46 +43,47 @@ function App() {
                 <Searchbar sendToParent={dataFromSearchBar} currentPage={currentPage} gameCategoryCount={apiResponse.count}></Searchbar>
             </div>
             <Navbar sendToParent={dataFromNavBar} currentTab={currentTab}></Navbar>
-            <div class="">
+            <div class="col-lg-10 offset-lg-1">
                 { currentTab == 1 &&  apiResponse.results.length > 0 && apiResponse.results.map((obj, i) =>
-                    <Card key={i} className="col-lg-4 offset-lg-1 my-3 d-inline-block">
+                    <Card key={i} className={ i%3 == 0 ? "col-lg-3 my-3 d-inline-block" : "col-lg-3 offset-lg-1 my-3 d-inline-block"}>
                         <Card.Title className="bg-cherry m-0 p-0 py-2" style={{ margin:0 }}>
                             <p className="m-0 p-0 py-2 ms-2 d-inline-block font-14" style={{ width:"max-content" }}><b>{obj.title}</b></p>
-
-                            { obj.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-14 float-end mt-1 me-3" bg="cherry-br">Switch</Badge> }
-                            { obj.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-14 float-end mt-1 me-3" bg="cherry-inv-br">Switch <i className="fa-solid fa-2"></i></Badge> }
-
-                            <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-heart me-3"></i></p>
-                            <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-star me-3"></i></p>
                         </Card.Title>
-                        <Card.Body className="" style={{ border:"2px solid blue"}}>
-                            { obj.photo_gallery.length == 1 && <div style={{ width:"720px", height:"405px", border:"1px solid purple" }}></div> }
+                        <Card.Body>
+                            { obj.photo_gallery.length == 1 && <img src={obj.photo_gallery[0].src} className="w-100" /> }
                             { obj.photo_gallery.length > 1 && <PhotoGallery photos={obj.photo_gallery}></PhotoGallery> }
-                            <div className="" style={{ border:"1px solid green"}}>
-                                {/* { !obj.release_future && <Badge className="font-14 mt-2 d-inline-block" bg="black-br"><i class="fa-regular fa-calendar-days me-2"></i>{obj.release_date}</Badge> } */}
-
-                                {/* { obj.availability.includes("Pre-order") && <Badge className="font-14 mt-2 ms-2 d-inline-block" bg="black-br">Pre-Order</Badge> } */}
-                                {/* { obj.availability.includes("New releases") && <Badge className="font-14 mt-2 ms-2 d-inline-block" bg="black-br">New Release</Badge> } */}
-                                {/* { obj.photo_gallery.length > 0 && <Badge className="font-14 mt-2 ms-2 d-inline-block" bg="black-br">Photos</Badge> } */}
-
-                                { !obj.sale_price && obj.regular_price && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br"><i class="fa-solid fa-tag me-1"></i>${obj.regular_price}</Badge> }
-                                { obj.sale_price && obj.regular_price && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="khaki-br"><i class="fa-solid fa-tag me-1"></i>
+                            <div style={{ border:"1px solid green"}}>
+                                 {/* <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-heart me-3"></i></p> */}
+                                 <p className="float-end m-0 p-0 py-2"><i class="fa-regular fa-note-sticky me-3"></i></p>
+                                { obj.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-12 float-end mt-2 me-3" bg="cherry-br">Switch</Badge> }
+                                { obj.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-12 float-end mt-2 me-3" bg="cherry-inv-br">Switch <i className="fa-solid fa-2"></i></Badge> }
+                                {/* { obj.availability.includes("Pre-order") && <Badge className="font-12 mt-2 ms-2 d-inline-block" bg="black-br">Pre-Order</Badge> } */}
+                                {/* { obj.availability.includes("New releases") && <Badge className="font-12 mt-2 ms-2 d-inline-block" bg="black-br">New Release</Badge> } */}
+                                {/* { obj.photo_gallery.length > 0 && <Badge className="font-12 mt-2 ms-2 d-inline-block" bg="black-br">Photos</Badge> } */}
+                                { !obj.sale_price && obj.regular_price && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">${obj.regular_price}</Badge> }
+                                { obj.sale_price && obj.regular_price && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="khaki-br">
                                     <span style={{ textDecoration: 'line-through' }}>${obj.regular_price}</span>
                                     <span className="ms-2">${obj.sale_price}</span>
                                     <i class="fa-regular fa-circle-down ms-2"></i><span>{obj.discount_percent}%</span>
-                                    <span className="ms-2"><i>Expires {obj.discount_ends} Days</i></span>
+                                    <span className="ms-2">(Expires {obj.discount_ends} Days)</span>
                                 </Badge> }
                                 <br/>
-                                { obj.release_future && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br"><i class="fa-solid fa-hourglass-start me-2"></i>{obj.release_date} (In {obj.release_future_days} Days)</Badge> }
-
-                                { obj.is_digital && obj.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br"><i class="fa-solid fa-cloud-arrow-down me-2"></i>Digital - {obj.file_size}</Badge> }
-                                { obj.is_digital && !obj.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br"><i class="fa-solid fa-cloud-arrow-down me-2"></i>Digital</Badge> }
-                                { obj.is_physical && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Physical</Badge> }
+                                { obj.is_digital && obj.file_size && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Digital - {obj.file_size}</Badge> }
+                                { obj.is_digital && !obj.file_size && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Digital</Badge> }
+                                { obj.is_physical && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Physical</Badge> }
                                 <br/>
-                                { obj.software_publisher && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Published By {obj.software_publisher}</Badge> }
-                                { obj.software_developer && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Developed By {obj.software_developer}</Badge> }
+                                { !obj.release_future && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Released On {obj.release_date}</Badge> }
+                                { obj.release_future && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Available On {obj.release_date} (In {obj.release_future_days} Days)</Badge> }
+                                { obj.software_publisher && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Published By {obj.software_publisher}</Badge> }
+                                {/* { obj.software_developer && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Developed By {obj.software_developer}</Badge> } */}
+                                <br/>
+                                <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><a target="_blank" href={"https://www.nintendo.com/" + obj.url} style={{ textDecoration:"none"}}>Nintendo eShop</a></Badge>
                             </div>
                         </Card.Body>
+                        <div class="card-footer">
+                            YouTube Here...
+                            Infinite Scroll?
+                        </div>
                     </Card>
                 )}
             </div>
@@ -94,22 +95,22 @@ function App() {
                     { !obj.photo_url && <Card.Img className="mt-2 card-img-sq" variant="top" src="https://place-hold.it/500x500?text=%22No%20Image%22&fontsize=48" /> }
                     <Card.Body className="d-flex flex-column">
                         <Card.Title>
-                            <b style={{ fontSize: '16px', }}>{obj.title}</b>
+                            <b className="font-14">{obj.title}</b>
                             <br/>
-                            { obj.platform_code == "NINTENDO_SWITCH" && <Badge className="mt-4" bg="danger"><span className="font-14">Switch</span></Badge> }
-                            { obj.platform_code == "NINTENDO_SWITCH_2" && <Badge className="mt-4" bg="cherry-inv"><span className="font-14">Switch <i className="fa-solid fa-2"></i></span></Badge> }
-                            <p className="mt-2 font-14">
+                            { obj.platform_code == "NINTENDO_SWITCH" && <Badge className="mt-4" bg="danger"><span className="font-12">Switch</span></Badge> }
+                            { obj.platform_code == "NINTENDO_SWITCH_2" && <Badge className="mt-4" bg="cherry-inv"><span className="font-12">Switch <i className="fa-solid fa-2"></i></span></Badge> }
+                            <p className="mt-2 font-12">
                                 { obj.release_future && <span><i>Available {obj.release_date} ({obj.release_future_days} Days)</i></span> }
                                 { !obj.release_future && <span>Released {obj.release_date}</span> }
                             </p>
                             <hr/>
-                            { !obj.sale_price && !obj.regular_price && <span className="font-14">FREE</span> }
-                            { !obj.sale_price && obj.regular_price && <span className="font-14">${obj.regular_price}</span> }
-                            { obj.sale_price && obj.regular_price && <span className="font-14" style={{ textDecoration: 'line-through', }}>${obj.regular_price}</span> }
-                            { obj.sale_price && <Badge bg="" className="font-14 bg-forest-green ms-2">${obj.sale_price}</Badge>}
-                            { obj.sale_price && <Badge bg="" className="font-14 bg-khaki ms-2"><i className="fa-solid fa-arrow-trend-down"></i> - {obj.discount_percent}%</Badge>}
+                            { !obj.sale_price && !obj.regular_price && <span className="font-12">FREE</span> }
+                            { !obj.sale_price && obj.regular_price && <span className="font-12">${obj.regular_price}</span> }
+                            { obj.sale_price && obj.regular_price && <span className="font-12" style={{ textDecoration: 'line-through', }}>${obj.regular_price}</span> }
+                            { obj.sale_price && <Badge bg="" className="font-12 bg-forest-green ms-2">${obj.sale_price}</Badge>}
+                            { obj.sale_price && <Badge bg="" className="font-12 bg-khaki ms-2"><i className="fa-solid fa-arrow-trend-down"></i> - {obj.discount_percent}%</Badge>}
                             <br/>
-                            {/* { obj.availability.includes("Pre-order") && <Badge bg="" className="bg-steel-blue mt-2"><span className="font-14">Pre-order</span></Badge> } */}
+                            {/* { obj.availability.includes("Pre-order") && <Badge bg="" className="bg-steel-blue mt-2"><span className="font-12">Pre-order</span></Badge> } */}
                         </Card.Title>
                         <Card.Text>
                         Some quick example text to build on the card title and make up the
