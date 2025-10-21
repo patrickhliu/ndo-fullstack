@@ -72,9 +72,9 @@ function App() {
                                 { obj.is_digital && !obj.file_size && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Digital</Badge> }
                                 { obj.is_physical && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Physical</Badge> }
                                 <br/>
-                                { !obj.release_future && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Released On {obj.release_date}</Badge> }
-                                { obj.release_future && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Available On {obj.release_date} (In {obj.release_future_days} Days)</Badge> }
-                                { obj.software_publisher && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Published By {obj.software_publisher}</Badge> }
+                                { !obj.release_future && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Released - {obj.release_date}</Badge> }
+                                { obj.release_future && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Available - {obj.release_date} (In {obj.release_future_days} Days)</Badge> }
+                                { obj.software_publisher && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Publisher - {obj.software_publisher}</Badge> }
                                 {/* { obj.software_developer && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Developed By {obj.software_developer}</Badge> } */}
                                 <br/>
                                 <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><a target="_blank" href={"https://www.nintendo.com/" + obj.url} style={{ textDecoration:"none"}}>Nintendo eShop</a></Badge>
