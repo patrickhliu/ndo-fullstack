@@ -2,9 +2,11 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 const NintendoController = require('../controllers/NintendoController');
+const WalmartController = require('../controllers/WalmartController');
 const express = require('express');
 const router = express.Router();
 
-router.get('/all', NintendoController.getAll);
+router.get('/nintendo/all', NintendoController.getAll);
+router.get('/walmart/all', WalmartController.getAll);
 
 export default router;

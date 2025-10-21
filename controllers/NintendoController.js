@@ -55,11 +55,12 @@ export const getAll = async(req, res) => {
                 sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\'')), 1),
                 //sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\'')), 1),
                 sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1),
-                sequelize.where(sequelize.fn('LOWER', sequelize.col('software_publisher')), "nintendo"),
+                sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Deals"\'')), 1),
+                //sequelize.where(sequelize.fn('LOWER', sequelize.col('software_publisher')), "nintendo"),
             ],
-            title: {
+            /* title: {
                 [Op.like]: "%donkey kong%",
-            },
+            }, */
 
         },
         //where: sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1),

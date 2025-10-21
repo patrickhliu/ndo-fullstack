@@ -74,7 +74,7 @@ function App() {
                                 <br/>
                                 { obj.is_digital && obj.file_size && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Digital - {obj.file_size}</Badge> }
                                 { obj.is_digital && !obj.file_size && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Digital</Badge> }
-                                { obj.is_physical && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Physical</Badge> }
+                                { obj.is_physical && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Physical</Badge> }
                                 { obj.is_dlc_content && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">DLC Content</Badge> }
                                 { obj.is_dlc_available && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">DLC Available</Badge> }
                                 { obj.is_upgrade && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Upgrade Pack</Badge> }
