@@ -68,11 +68,14 @@ export const getAll = async(req, res) => {
             software_publisher: {
                 [Op.eq]: "Nintendo",
             }, */
+            is_physical: {
+                [Op.eq]: true,
+            },
         },
-        where: sequelize.where(
+        /* where: sequelize.where(
             //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
-            sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"New releases"\''), ), 1
-        ),
+            sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
+        ), */
         limit: 1000,
     });
 
@@ -80,6 +83,7 @@ export const getAll = async(req, res) => {
 
     for(let o of dbResults) {
         //console.log(o);
+        // "https://place-hold.it/500x500/D3D3D3/111?text=No%20Image&fontsize=60"
 
         const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
         const oneDay = 1000 * 60 * 60 * 24;
@@ -87,7 +91,12 @@ export const getAll = async(req, res) => {
         let now = Date.now(); // already in ms...
         let release_date = new Date(o.release_date);
         let discountEnds = null;
-        let photoGallery = [];
+        let photoGallery = [{
+            src: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + o.product_image,
+            width:1280,
+            height:720,
+
+        }];
         let videoGallery = [];
 
         //if(o.nsuid == '70010000002722') console.log(o);
@@ -98,29 +107,21 @@ export const getAll = async(req, res) => {
 
         if(o.product_gallery) {
             for(let m of o.product_gallery) {
-                /* largeURL:
-                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg',
-              thumbnailURL:
-                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg',
-              width: 1875,
-              height: 2500, */
-
-
                 if(m.resourceType == "image") {
                     photoGallery.push({
-                        url: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + m.publicId,
+                        src: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + m.publicId,
                         width:1280,
                         height:720,
                     });
                 }
 
-                if(m.resourceType == "video") videoGallery.push("https://assets.nintendo.com/image/upload/ar_16:9,w_500/" + m.publicId);
+                if(m.resourceType == "video") videoGallery.push("https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + m.publicId);
             }
         }
 
         let game = {
             nsuid: o.nsuid,
-            photo_url: o.product_image_square ? o.product_image_square : "https://assets.nintendo.com/image/upload/ar_16:9,w_500/" + o.product_image,
+            //photo_url: "https://assets.nintendo.com/image/upload/ar_16:9,w_512/" + o.product_image,
             title: o.title.replace(/™|®|©/g, ''),
             release_date: release_date.toLocaleString('en-US', options),
             release_future: release_date > now,

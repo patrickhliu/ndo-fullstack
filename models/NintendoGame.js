@@ -108,31 +108,31 @@ NintendoGame.init(
     },
     has_dlc: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
     },
     is_digital: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
     },
     is_physical: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
     },
     is_upgrade: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
     },
     is_exclusive: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
     },
     is_featured: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
     },
     is_shovelware: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
     },
     availability: {
         type: DataTypes.JSON,
@@ -188,7 +188,7 @@ NintendoGame.init(
     },
     visible_in_search: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
     },
     genres: {
         type: DataTypes.JSON,

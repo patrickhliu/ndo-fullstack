@@ -72,24 +72,19 @@
     object-fit: contain;
 }
 
+.swiper-container {
+    width: 720px;
+    height: 405px;
+    /* border-radius: 5%; */
+
+    .swiper-slide {
 
 
-
-*,*::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: calibri;
-}
-
-body {
-    display: flex;
-    justify-content: center;
-}
-
-.swiper-photo {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    object-position: center;
+        .swiper-photo {
+            width: 100%; /* Ensures image doesn't overflow */
+            height: auto; /* Maintains aspect ratio */
+            /* object-fit: contain;
+            object-position: center; */
+        }
+    }
 }

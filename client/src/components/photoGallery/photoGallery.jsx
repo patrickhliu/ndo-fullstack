@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import { Autoplay, Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
+import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 function photoGallery(props) {
-    const [photos, setPhotos] = useState(props.photos);
-
-    useEffect(() => {
-        console.log('photos are set...', photos);
-    }, [photos]);
+    const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Swiper style={{ width:250, height:250, border:"2px solid red"}}
-      // install Swiper modules
-      modules={[Navigation, Pagination, Scrollbar, A11y]}
-      slidesPerView={1}
-    >
+    <Swiper className="swiper-container" modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]} slidesPerView={1} scrollbar={true}>
     {props.photos.map((p, i) => (
-        <SwiperSlide key={i}>
-            <img src={p.url} className="swiper-photo"></img>
+        <SwiperSlide className="swiper-slide" key={i}>
+            <img src={p.src} className="swiper-photo pointer m-0 p-0 col-xs-12" onClick={() => setIsOpen(true)}></img>
         </SwiperSlide>
     ))}
+    <Lightbox open={isOpen} close={() => setIsOpen(false)} slides={props.photos} />
     </Swiper>
   );
 };
