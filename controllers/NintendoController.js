@@ -52,13 +52,7 @@ export const getAll = async(req, res) => {
             sale_price: {
                 [Op.ne]: null,
             },
-            /* top_level_filters: {
-                [Op.and]: [
-                    { [Op.notLike]: 'Upgrade Pack' },
-                    { [Op.notLike]: 'DLC' },
-                    { [Op.notLike]: 'Games with DLC' },
-                ],
-            },
+            /*
              dlc_type: {
                 [Op.eq]: null,
             },
@@ -76,6 +70,21 @@ export const getAll = async(req, res) => {
             //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
             sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
         ), */
+        where: sequelize.where(
+            //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
+            sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ),
+            1
+        ),
+        orWhere: sequelize.where(
+            //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
+            sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\''), ),
+            1
+        ),
+        orWhere: sequelize.where(
+            //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
+            sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ),
+            1
+        ),
         limit: 1000,
     });
 
@@ -141,6 +150,7 @@ export const getAll = async(req, res) => {
             video_gallery: videoGallery,
             url: o.url,
             url_key: o.url_key,
+            top_level_filters: !o.top_level_filters ? [] : o.top_level_filters,
         }
 
         //console.log(game);
