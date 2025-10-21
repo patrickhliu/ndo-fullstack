@@ -71,10 +71,11 @@ function App() {
                                 { obj.is_digital && obj.file_size && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Digital - {obj.file_size}</Badge> }
                                 { obj.is_digital && !obj.file_size && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Digital</Badge> }
                                 { obj.is_physical && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><i class="fa-solid fa-box-archive me-2"></i>Physical</Badge> }
-                                { obj.top_level_filters.includes("Upgrade pack") && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Upgrade Pack</Badge> }
-                                { obj.top_level_filters.includes("DLC") && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">DLC</Badge> }
-                                { obj.top_level_filters.includes("Games with DLC") && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">DLC</Badge> }
-                                { obj.top_level_filters.includes("Demo available") && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Demo</Badge> }
+                                { obj.is_dlc_content && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">DLC Content</Badge> }
+                                { obj.is_dlc_available && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">DLC Available</Badge> }
+                                { obj.is_upgrade && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Upgrade Pack</Badge> }
+                                { obj.is_bundle && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Game + DLC</Badge> }
+                                { obj.is_demo_available && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Demo Available</Badge> }
                                 <br/>
                                 { !obj.release_future && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Released - {obj.release_date}</Badge> }
                                 { obj.release_future && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">Available - {obj.release_date} (In {obj.release_future_days} Days)</Badge> }

@@ -49,9 +49,9 @@ export const getAll = async(req, res) => {
 
     let dbResults = await NintendoGame.findAll({
         where: {
-            sale_price: {
+            /* sale_price: {
                 [Op.ne]: null,
-            },
+            }, */
             /*
              dlc_type: {
                 [Op.eq]: null,
@@ -65,17 +65,21 @@ export const getAll = async(req, res) => {
             is_physical: {
                 [Op.eq]: true,
             },*/
+            dlc_type: {
+                [Op.eq]: "Bundle",
+            },
         },
         /* where: sequelize.where(
-            //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
-            sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
+            sequelize.fn('not JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1
         ), */
-        where: sequelize.where(
-            //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
-            sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ),
-            1
-        ),
-        orWhere: sequelize.where(
+        /* where: sequelize.where(
+            sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ), 1
+        ), */
+        /* where: sequelize.where(
+            sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1
+        ), */
+
+        /* orWhere: sequelize.where(
             //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
             sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\''), ),
             1
@@ -84,7 +88,7 @@ export const getAll = async(req, res) => {
             //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
             sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ),
             1
-        ),
+        ), */
         limit: 1000,
     });
 
@@ -151,6 +155,12 @@ export const getAll = async(req, res) => {
             url: o.url,
             url_key: o.url_key,
             top_level_filters: !o.top_level_filters ? [] : o.top_level_filters,
+            dlc_type: !o.dlc_type ? null : o.dlc_type.replace(/[^a-zA-Z0-9\s]/g, ''),
+            is_dlc_content: !o.top_level_filters ? false : o.top_level_filters.includes("DLC") && o.dlc_type.replace(/[^a-zA-Z0-9\s]/g, '') == "Individual",
+            is_dlc_available: !o.top_level_filters ? false : o.top_level_filters.includes("Games with DLC"),
+            is_demo_available: !o.top_level_filters ? false : o.top_level_filters.includes("Demo available with DLC"),
+            is_bundle: !o.dlc_type ? false : o.dlc_type.replace(/[^a-zA-Z0-9\s]/g, '').includes("Bundle"),
+            is_upgrade: !o.top_level_filters ? false : o.top_level_filters.includes("Upgrade pack"),
         }
 
         //console.log(game);
