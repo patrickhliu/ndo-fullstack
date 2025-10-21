@@ -13,16 +13,32 @@ import 'swiper/css/scrollbar';
 
 function photoGallery(props) {
     const [isOpen, setIsOpen] = useState(false);
+    const [isHovering, setIsHovering] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsHovering(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovering(false);
+    };
 
   return (
-    <Swiper className="w-100" modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]} slidesPerView={1} scrollbar={true}>
+    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <Swiper className="w-100" modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]} slidesPerView={1} scrollbar={true} >
+
     {props.photos.map((p, i) => (
         <SwiperSlide className="w-100" key={i}>
-            <img src={p.src} className="w-100 pointer m-0 p-0" onClick={() => setIsOpen(true)}></img>
+            <img src={p.src} className="w-100 pointer m-0 p-0"></img>
+            <div className={isHovering ? "w-100 h-100 m-0 p-0 pointer flex-center" : "w-100 h-100 m-0 p-0 pointer visually-hidden flex-center"}
+                style={{ position:"absolute", top:0, left:0, backgroundColor:"rgba(128, 128, 128, 0.5)" }} onClick={() => setIsOpen(true)}>
+                <i class="fa-solid fa-magnifying-glass fa-5x"></i>
+            </div>
         </SwiperSlide>
     ))}
     <Lightbox open={isOpen} close={() => setIsOpen(false)} slides={props.photos} />
     </Swiper>
+    </div>
   );
 };
 

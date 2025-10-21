@@ -48,35 +48,24 @@ export const getAll = async(req, res) => {
     let addedLikeOperator = ["Coming soon"].map((word) => ({ [Op.iLike]: `%${word || ""}%` })) //this line will add iLike operator for each string
 
     let dbResults = await NintendoGame.findAll({
+
         where: {
-            /* sale_price: {
-                [Op.ne]: null,
-            }, */
-            /*
-             dlc_type: {
-                [Op.eq]: null,
+            //color: 'red',
+            [Op.and]: [
+                sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\'')), 1),
+                //sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\'')), 1),
+                sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1),
+                sequelize.where(sequelize.fn('LOWER', sequelize.col('software_publisher')), "nintendo"),
+            ],
+            title: {
+                [Op.like]: "%donkey kong%",
             },
-            is_upgrade: {
-                [Op.eq]: false,
-            },
-            software_publisher: {
-                [Op.eq]: "Nintendo",
-            },
-            is_physical: {
-                [Op.eq]: true,
-            },*/
-            dlc_type: {
-                [Op.eq]: "Bundle",
-            },
+
         },
+        //where: sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1),
+        //where: sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ), 1),
         /* where: sequelize.where(
-            sequelize.fn('not JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1
-        ), */
-        /* where: sequelize.where(
-            sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ), 1
-        ), */
-        /* where: sequelize.where(
-            sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1
+            sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1
         ), */
 
         /* orWhere: sequelize.where(
@@ -89,7 +78,7 @@ export const getAll = async(req, res) => {
             sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ),
             1
         ), */
-        limit: 1000,
+        limit: 500,
     });
 
     logger.info(JSON.stringify(dbResults));
@@ -108,7 +97,6 @@ export const getAll = async(req, res) => {
             src: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + o.product_image,
             width:1280,
             height:720,
-
         }];
         let videoGallery = [];
 
@@ -128,7 +116,13 @@ export const getAll = async(req, res) => {
                     });
                 }
 
-                if(m.resourceType == "video") videoGallery.push("https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + m.publicId);
+                if(m.resourceType == "video") {
+                    videoGallery.push({
+                        src: "https://assets.nintendo.com/video/upload/ar_16:9,w_1280/" + m.publicId,
+                        width:1280,
+                        height:720,
+                    });
+                }
             }
         }
 
@@ -155,12 +149,12 @@ export const getAll = async(req, res) => {
             url: o.url,
             url_key: o.url_key,
             top_level_filters: !o.top_level_filters ? [] : o.top_level_filters,
-            dlc_type: !o.dlc_type ? null : o.dlc_type.replace(/[^a-zA-Z0-9\s]/g, ''),
+            dlc_type: !o.dlc_type ? null : o.dlc_type,
             is_dlc_content: !o.top_level_filters ? false : o.top_level_filters.includes("DLC") && o.dlc_type.replace(/[^a-zA-Z0-9\s]/g, '') == "Individual",
             is_dlc_available: !o.top_level_filters ? false : o.top_level_filters.includes("Games with DLC"),
             is_demo_available: !o.top_level_filters ? false : o.top_level_filters.includes("Demo available with DLC"),
-            is_bundle: !o.dlc_type ? false : o.dlc_type.replace(/[^a-zA-Z0-9\s]/g, '').includes("Bundle"),
-            is_upgrade: !o.top_level_filters ? false : o.top_level_filters.includes("Upgrade pack"),
+            is_bundle: !o.dlc_type ? false : o.dlc_type.includes("Bundle"),
+            is_upgrade: o.is_upgrade,
         }
 
         //console.log(game);

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 import Navbar from './components/navbar/navbar';
 import Searchbar from './components/searchbar/searchbar';
 import Pagination from './components/pagination/pagination';
 import PhotoGallery from './components/photoGallery/photoGallery';
+import VideoGallery from './components/videoGallery/videoGallery';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -85,8 +87,20 @@ function App() {
                                 <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><a target="_blank" href={"https://www.nintendo.com/" + obj.url} style={{ textDecoration:"none"}}>Nintendo eShop</a></Badge>
                             </div>
                         </Card.Body>
+                        { obj.video_gallery.length > 0 &&
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#collapse-" + obj.nsuid} aria-expanded="true" aria-controls={"collapse-" + obj.nsuid}>Videos</button>
+                                    </h2>
+                                    <div id={"collapse-" + obj.nsuid} class="accordion-collapse collapse hide" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <VideoGallery videos={obj.video_gallery}></VideoGallery>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> }
                         <div class="card-footer">
-                            YouTube Here...
                             Infinite Scroll?
                         </div>
                     </Card>

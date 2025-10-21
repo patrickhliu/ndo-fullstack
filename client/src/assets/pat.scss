@@ -71,3 +71,11 @@
     height:250px;
     object-fit: contain;
 }
+
+.flex-center {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;    /* Centers vertically */
+  height: 100px;         /* Example height for the container */
+  border: 1px solid #ccc; /* For visualization */
+}
