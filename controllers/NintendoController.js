@@ -50,14 +50,16 @@ export const getAll = async(req, res) => {
     let dbResults = await NintendoGame.findAll({
 
         where: {
-            //color: 'red',
-            [Op.and]: [
+            is_physical: {
+                [Op.eq]: true,
+            }
+            /* [Op.and]: [
                 sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\'')), 1),
                 //sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\'')), 1),
                 sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1),
                 sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Deals"\'')), 1),
                 //sequelize.where(sequelize.fn('LOWER', sequelize.col('software_publisher')), "nintendo"),
-            ],
+            ], */
             /* title: {
                 [Op.like]: "%donkey kong%",
             }, */
@@ -156,6 +158,7 @@ export const getAll = async(req, res) => {
             is_demo_available: !o.top_level_filters ? false : o.top_level_filters.includes("Demo available with DLC"),
             is_bundle: !o.dlc_type ? false : o.dlc_type.includes("Bundle"),
             is_upgrade: o.is_upgrade,
+            walmart_url: o.walmart_url,
         }
 
         //console.log(game);
