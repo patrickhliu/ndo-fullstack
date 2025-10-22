@@ -214,6 +214,10 @@ NintendoGame.init(
         type: DataTypes.STRING,
         allowNull: true,
     },
+    walmart_url: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    }
   },
   {
     // Other model options go here
