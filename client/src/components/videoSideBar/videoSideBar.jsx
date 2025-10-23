@@ -18,7 +18,9 @@ function videoSideBar(props) {
 
     return (
         <div className="d-inline-block">
-            <button class="btn btn-sm bg-cherry-br" type="button" data-bs-toggle="offcanvas" data-bs-target={"#videos-" + props.obj.nsuid} aria-controls={"videos-" + props.obj.nsuid}><i class="fa-regular fa-circle-play"></i></button>
+            <button class="btn btn-sm bg-cherry-br me-3" type="button" data-bs-toggle="offcanvas" data-bs-target={"#videos-" + props.obj.nsuid} aria-controls={"videos-" + props.obj.nsuid} style={{ borderRadius:"40px" }}>
+                <i class="fa-regular fa-circle-play"></i>
+            </button>
             <div class="offcanvas offcanvas-start" tabindex="-1" id={"videos-" + props.obj.nsuid} aria-labelledby="video-title">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="video-title">{props.obj.title}</h5>
