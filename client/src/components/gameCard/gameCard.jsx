@@ -23,7 +23,7 @@ function gameCard({ mesureRef, game, index}) {
                     <a target="_blank" href={"https://www.nintendo.com/" + game.url} style={{ textDecoration:"none", color:"#fff"}}><b>Nintendo eShop</b></a>
                 </Badge>
 
-                {/* { game.video_gallery.length > 0 && <VideoSideBar obj={game}></VideoSideBar> } */}
+                { game.video_gallery.length > 0 && <VideoSideBar obj={game}></VideoSideBar> }
                 <br/>
                 { !game.sale_price && game.regular_price && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br">${game.regular_price}</Badge> }
                 { game.sale_price && game.regular_price && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="khaki-br">
