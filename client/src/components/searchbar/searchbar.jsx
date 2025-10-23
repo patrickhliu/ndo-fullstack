@@ -25,15 +25,19 @@ function searchbar(props) {
     return (
         <>
         <Row>
-            <Col>
+            <Col></Col>
+            <Col></Col>
+            <Col xs={6}>
                 <InputGroup>
-                    <Form.Control placeholder="Search..." onChange={(e) => setQuery(e.target.value)} value={query}/>
-                    <Button variant="" className="bg-steel-blue" onClick={search}>Search</Button>
+                    <Form.Control placeholder="Search..." onChange={(e) => setQuery(e.target.value)} value={query} style={{ border:"2px solid #111"}}/>
+                    <Button className="bg-khaki-br" onClick={search}>Search</Button>
                 </InputGroup>
             </Col>
-            <Col>
+            <Col xs={2}>
                 <Sortbar sendToParent={dataFromSortBar} filters={filters} gameCategoryCount={props.gameCategoryCount}></Sortbar>
             </Col>
+            <Col></Col>
+            <Col></Col>
         </Row>
         </>
     );

@@ -23,7 +23,7 @@ export const getAll = async(req, res) => {
     // Logic to fetch all users from a database or other source
     //res.status(200).json({ message: 'Getting all users' });
     //let offset = 0;
-    let take = 25;
+    let take = 24;
     let skip = req.query.current_page-- * take
     let output = [];
 
@@ -142,8 +142,6 @@ export const getAll = async(req, res) => {
             discount_percent: !o.percent_off ? null : parseInt(o.percent_off),
             discount_ends: !discountEnds ? null : Math.round(Math.abs((discountEnds - now) / oneDay)),
             availability: o.availability,
-            is_physical: o.is_physical,
-            is_digital: o.is_digital,
             file_size: o.file_size,
             software_publisher: o.software_publisher,
             software_developer: o.software_developer,
@@ -155,9 +153,10 @@ export const getAll = async(req, res) => {
             dlc_type: !o.dlc_type ? null : o.dlc_type,
             is_dlc_content: !o.top_level_filters ? false : o.top_level_filters.includes("DLC") && o.dlc_type.replace(/[^a-zA-Z0-9\s]/g, '') == "Individual",
             is_dlc_available: !o.top_level_filters ? false : o.top_level_filters.includes("Games with DLC"),
-            is_demo_available: !o.top_level_filters ? false : o.top_level_filters.includes("Demo available with DLC"),
+            is_demo_available: !o.top_level_filters ? false : o.top_level_filters.includes("Demo available"),
             is_bundle: !o.dlc_type ? false : o.dlc_type.includes("Bundle"),
             is_upgrade: o.is_upgrade,
+            editions: !o.editions ? [] : o.editions,
             //walmart_url: o.walmart_url,
         }
 

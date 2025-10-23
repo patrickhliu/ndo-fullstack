@@ -63,6 +63,7 @@ function App() {
 
     return (
         <>
+            <h3>What is wrong with Video???</h3>
             <div className="my-3 ms-2">
                 <Searchbar sendToParent={dataFromSearchBar} query={query} filters={filters}></Searchbar>
             </div>
@@ -75,7 +76,6 @@ function App() {
                     }
                     return <GameCard key={index} game={resGame}/>
                 })}
-                <p id="loading-indicator">Loading Indicator</p>
             </div>
         </>
     );
