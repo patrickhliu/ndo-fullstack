@@ -225,6 +225,6 @@ NintendoGame.init(
 );
 
 // the defined model is the class itself
-console.log(NintendoGame === sequelize.models.NintendoGame); // true
+//console.log(NintendoGame === sequelize.models.NintendoGame); // true
 
 export default NintendoGame;

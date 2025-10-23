@@ -19,7 +19,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 const reactPath = path.join(__dirname, 'client/dist');
-console.log(reactPath);
+//console.log(reactPath);
 app.use(express.static(reactPath));
 
 app.use('/', routes);

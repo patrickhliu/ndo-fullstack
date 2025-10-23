@@ -22,7 +22,9 @@ const logger = winston.createLogger({
 export const getAll = async(req, res) => {
     // Logic to fetch all users from a database or other source
     //res.status(200).json({ message: 'Getting all users' });
-
+    //let offset = 0;
+    let take = 25;
+    let skip = req.query.current_page-- * take
     let output = [];
 
     /* let dbResults = await NintendoGame.findAll({
@@ -45,12 +47,9 @@ export const getAll = async(req, res) => {
         }]
     }, */
 
-    let addedLikeOperator = ["Coming soon"].map((word) => ({ [Op.iLike]: `%${word || ""}%` })) //this line will add iLike operator for each string
-
     let dbResults = await NintendoGame.findAll({
-
         where: {
-            is_physical: {
+            is_featured: {
                 [Op.eq]: true,
             }
             /* [Op.and]: [
@@ -81,10 +80,11 @@ export const getAll = async(req, res) => {
             sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ),
             1
         ), */
-        limit: 500,
+        offset: skip,
+        limit: take,
     });
 
-    logger.info(JSON.stringify(dbResults));
+    //logger.info(JSON.stringify(dbResults));
 
     for(let o of dbResults) {
         //console.log(o);
@@ -170,7 +170,7 @@ export const getAll = async(req, res) => {
 
     // {results:[], count:{}, total_pages:0}
     res.json({
-        results: output,
+        games: output,
         count: {
              dlc: 0,
              deals: 0,

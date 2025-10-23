@@ -34,7 +34,7 @@ const sortbar = (props) => {
         });
 
         await Promise.all([promise]);
-        console.log(cloneFilters);
+        //console.log(cloneFilters);
         props.sendToParent(cloneFilters);
     }
 
@@ -74,7 +74,7 @@ const sortbar = (props) => {
     <Dropdown>
       <Dropdown.Toggle variant="" className="bg-steel-blue ms-3">Sales</Dropdown.Toggle>
       <Dropdown.Menu style={{ width: '250px', }}>
-        <Dropdown.Item onClick={() => { clickFilter({sales:"sales"}); }}>On Sale ({props.gameCategoryCount.deals ?? 0}) {props.filters.sales.includes("sales") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}</Dropdown.Item>
+        <Dropdown.Item onClick={() => { clickFilter({sales:"sales"}); }}>On Sale {/* ({props.gameCategoryCount.deals ?? 0}) */} {props.filters.sales.includes("sales") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}</Dropdown.Item>
         <hr/>
         <Dropdown.Item onClick={() => { clickFilter({sales:null }); }}>Clear</Dropdown.Item>
       </Dropdown.Menu>

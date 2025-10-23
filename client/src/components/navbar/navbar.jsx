@@ -6,7 +6,7 @@ function navbar(props) {
 
     //console.log('b', data);
     function clickNav(eventKey) {
-        console.log('nav click', eventKey);
+        //console.log('nav click', eventKey);
         setCurrentTab(eventKey);
         props.sendToParent(eventKey);
     }
