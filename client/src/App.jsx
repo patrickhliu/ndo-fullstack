@@ -90,7 +90,7 @@ function App() {
                         <div class="card-footer">
                             Infinite Scroll?
                             <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><a target="_blank" href={"https://www.nintendo.com/" + obj.url} style={{ textDecoration:"none"}}>Nintendo eShop</a></Badge>
-                            { obj.walmart_url && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><a target="_blank" href={obj.walmart_url} style={{ textDecoration:"none"}}>Walmart</a></Badge> }
+                            {/* { obj.walmart && <Badge className="font-12 mt-2 me-2 d-inline-block" bg="black-br"><a target="_blank" href={obj.walmart.url} style={{ textDecoration:"none"}}>Walmart</a></Badge> } */}
                             { obj.video_gallery.length > 0 && <VideoSideBar obj={obj}></VideoSideBar> }
                         </div>
                     </Card>

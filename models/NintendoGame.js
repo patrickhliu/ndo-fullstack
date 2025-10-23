@@ -110,13 +110,9 @@ NintendoGame.init(
         type: DataTypes.BOOLEAN,
         allowNull: false,
     },
-    is_digital: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-    },
-    is_physical: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
+    editions: {
+        type: DataTypes.JSON,
+        allowNull: true,
     },
     is_upgrade: {
         type: DataTypes.BOOLEAN,
@@ -214,10 +210,10 @@ NintendoGame.init(
         type: DataTypes.STRING,
         allowNull: true,
     },
-    walmart_url: {
-        type: DataTypes.STRING,
+    /* walmart: {
+        type: DataTypes.JSON,
         allowNull: true,
-    }
+    } */
   },
   {
     // Other model options go here

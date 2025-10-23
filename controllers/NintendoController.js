@@ -158,7 +158,7 @@ export const getAll = async(req, res) => {
             is_demo_available: !o.top_level_filters ? false : o.top_level_filters.includes("Demo available with DLC"),
             is_bundle: !o.dlc_type ? false : o.dlc_type.includes("Bundle"),
             is_upgrade: o.is_upgrade,
-            walmart_url: o.walmart_url,
+            //walmart_url: o.walmart_url,
         }
 
         //console.log(game);
