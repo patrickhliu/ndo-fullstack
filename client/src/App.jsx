@@ -63,11 +63,10 @@ function App() {
 
     return (
         <>
-            <h3>What is wrong with Video???</h3>
-            <div className="my-3 ms-2">
+            <div className="" style={{ position:"fixed", top:"0", left:"0", width:"100vw", zIndex:"100", padding:"20px", backgroundColor:"#d3d3d3" }}>
                 <Searchbar sendToParent={dataFromSearchBar} query={query} filters={filters}></Searchbar>
             </div>
-            <div className="col-lg-10 offset-lg-1 hide-scroll" id="scroll-container" style={{ minHeight: '100vh', overflowY: 'scroll', border: '1px solid black' }}>
+            <div className="col-lg-10 offset-lg-1 hide-scroll" id="scroll-container" style={{ margin:"100px auto", minHeight: '100vh', overflowY: 'scroll' }}>
                 { resGames.map((resGame, index) => {
                     if (index === resGames.length - 1) {
                         return (

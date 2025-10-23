@@ -13,9 +13,9 @@ function gameCard({ mesureRef, game, index}) {
         <Card.Body>
             { game.photo_gallery.length == 1 && <img src={game.photo_gallery[0].src} className="w-100" /> }
             { game.photo_gallery.length > 1 && <PhotoGallery photos={game.photo_gallery}></PhotoGallery> }
-            <div style={{ border:"1px solid green" }}>
+            <div>
                     {/* <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-heart me-3"></i></p> */}
-                    <p className="float-end m-0 p-0 py-2"><i class="fa-regular fa-note-sticky me-3"></i></p>
+                <p className="float-end m-0 p-0 py-2"><i class="fa-regular fa-note-sticky me-3"></i></p>
                 { game.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-12 mt-2 me-3" bg="cherry-br">Switch</Badge> }
                 { game.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-12 mt-2 me-3" bg="cherry-inv-br">Switch <i className="fa-solid fa-2"></i></Badge> }
 
