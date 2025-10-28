@@ -18,8 +18,8 @@ function videoSideBar(props) {
 
     return (
         <div className="d-inline-block">
-            <button class="btn btn-sm bg-cherry-br me-3" type="button" data-bs-toggle="offcanvas" data-bs-target={"#videos-" + props.obj.nsuid} aria-controls={"videos-" + props.obj.nsuid}>
-                <i class="fa-regular fa-circle-play"></i>
+            <button class="btn btn-sm btn-success me-3" type="button" data-bs-toggle="offcanvas" data-bs-target={"#videos-" + props.obj.nsuid} aria-controls={"videos-" + props.obj.nsuid} style={{ borderRadius:"10px" }}>
+                <b>Videos ({ props.obj.video_gallery.length })</b>
             </button>
             <div class="offcanvas offcanvas-start" tabindex="-1" id={"videos-" + props.obj.nsuid} aria-labelledby="video-title">
                 <div class="offcanvas-header">

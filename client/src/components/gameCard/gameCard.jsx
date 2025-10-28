@@ -5,6 +5,8 @@ import PhotoGallery from '../photoGallery/photoGallery';
 import VideoSideBar from '../../components/videoSideBar/videoSideBar';
 
 function gameCard({ mesureRef, game, index}) {
+    console.log(game);
+
   return (
     <Card index={index} className={ index % 3 == 0 ? "col-lg-3 my-3 d-inline-block" : "col-lg-3 offset-lg-1 my-3 d-inline-block"} ref={mesureRef}>
         <Card.Title className="bg-cherry m-0 p-0 py-2" style={{ margin:0 }}>
@@ -20,8 +22,14 @@ function gameCard({ mesureRef, game, index}) {
                 { game.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-14 mt-2 me-3" bg="cherry-inv-br">Switch <i className="fa-solid fa-2"></i></Badge> }
 
                 <Badge className="font-14 mt-2 me-3 d-inline-block" bg="cherry-br">
-                    <a target="_blank" href={"https://www.nintendo.com/" + game.url} style={{ textDecoration:"none", color:"#fff"}}><b>Nintendo eShop</b></a>
+                    <a target="_blank" href={"https://www.nintendo.com/" + game.url} style={{ textDecoration:"none", color:"#fff"}}><b>eShop</b></a>
                 </Badge>
+
+                { game.is_dlc_content && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Is DLC</Badge> }
+                {/* { game.is_dlc_available && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">DLC Available</Badge> } */}
+                { game.is_upgrade && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Upgrade Pack</Badge> }
+                { game.is_bundle && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Game + DLC</Badge> }
+                { game.is_demo_available && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Has Demo</Badge> }
 
                 { game.video_gallery.length > 0 && <VideoSideBar obj={game}></VideoSideBar> }
                 <br/>
@@ -43,18 +51,17 @@ function gameCard({ mesureRef, game, index}) {
                 { game.editions.includes("Digital") && game.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Digital - {game.file_size}</Badge> }
                 { game.editions.includes("Digital") && !game.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Digital</Badge> }
                 { game.editions.includes("Physical") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Physical</Badge> }
-                { game.is_dlc_content && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">DLC Content</Badge> }
-                { game.is_dlc_available && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">DLC Available</Badge> }
-                { game.is_upgrade && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Upgrade Pack</Badge> }
-                { game.is_bundle && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Game + DLC</Badge> }
-                { game.is_demo_available && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Demo Available</Badge> }
-                <br/>
+
                 { game.software_publisher && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Published By {game.software_publisher}</Badge> }
-{/* how do i link dlc content to the full game? */}
             </div>
         </Card.Body>
-        {/* <div class="card-footer">
-        </div> */}
+        { game.is_dlc_available && game.dlc_data.length > 0 && (
+            <Card.Footer>
+                { game.dlc_data.map((o, i) => {
+                    <span key={i}>{ o.title }</span>
+                })}
+            </Card.Footer>
+        )}
     </Card>
   )
 }

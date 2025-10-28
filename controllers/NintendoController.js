@@ -24,7 +24,7 @@ export const getAll = async(req, res) => {
     //res.status(200).json({ message: 'Getting all users' });
     //let offset = 0;
     //console.log(JSON.parse(req.query.filters));
-    let queryFilters = JSON.parse(req.query.filters);
+    let queryFilters = req.query.filters ? JSON.parse(req.query.filters) : {};
 
     let take = 24;
     let skip = (req.query.current_page - 1) * take
@@ -71,15 +71,16 @@ export const getAll = async(req, res) => {
     } else if(queryFilters.price_range == 5) {
         // "all"
     }
-
+console.log(queryFilters);
     if(queryFilters.game_category == "games") {
-        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+        /* if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
 
         constraints.where[Op.and].push([
             sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\'')), 1),
             sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\'')), 1),
             sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1),
-        ]);
+        ]); */
+        constraints.where.dlc_type =  { [Op.eq]: null }
     } else if(queryFilters.game_category =="featured") {
         constraints.where.is_featured =  { [Op.gte]: true }
     } else if(queryFilters.game_category =="dlc") {
@@ -277,6 +278,7 @@ export const getAll = async(req, res) => {
         }
 
         let game = {
+            id: o.id,
             nsuid: o.nsuid,
             //photo_url: "https://assets.nintendo.com/image/upload/ar_16:9,w_512/" + o.product_image,
             title: o.title.replace(/™|®|©/g, ''),
@@ -298,19 +300,47 @@ export const getAll = async(req, res) => {
             url_key: o.url_key,
             top_level_filters: !o.top_level_filters ? [] : o.top_level_filters,
             dlc_type: !o.dlc_type ? null : o.dlc_type,
-            is_dlc_content: !o.top_level_filters ? false : o.top_level_filters.includes("DLC") && o.dlc_type.replace(/[^a-zA-Z0-9\s]/g, '') == "Individual",
+            is_dlc_content: !o.dlc_type ? false : o.dlc_type == "Individual" || o.dlc_type == "Bundle",
             is_dlc_available: !o.top_level_filters ? false : o.top_level_filters.includes("Games with DLC"),
             is_demo_available: !o.top_level_filters ? false : o.top_level_filters.includes("Demo available"),
-            is_bundle: !o.dlc_type ? false : o.dlc_type.includes("Bundle"),
+            is_bundle: !o.dlc_type ? false : o.dlc_type == "ROM Bundle",
             is_upgrade: o.is_upgrade,
             editions: !o.editions ? [] : o.editions,
             availability: !o.availability ? [] : o.availability,
             //walmart_url: o.walmart_url,
+            dlc_data: [],
+        }
+
+        if(o.dlc_type == null && o.top_level_filters && o.top_level_filters.includes("Games with DLC")) {
+            let urlKeyArr = o.url_key.split("-");
+            let tmpKey = urlKeyArr.slice(0, 3);
+            tmpKey = tmpKey.join("-");
+            console.log(tmpKey);
+
+            game.dlc_data = await NintendoGame.findAll({
+                where: {
+                    url_key: {
+                        [Op.like]: '%' + tmpKey + '%', // Use % as a wildcard
+                    },
+                    platform_code: {
+                        [Op.eq]: o.platform_code,
+                    },
+                    dlc_type: {
+                        [Op.or] : [
+                            { [Op.eq]: "Individual" },
+                            { [Op.eq]: "Bundle" },
+                        ]
+
+                    },
+                },
+                attributes: ["title", "nsuid", "regular_price", "sale_price", "amount_off", "percent_off", "platform_code", "url"]
+            });
+
+            //console.log(game.dlc_data);
         }
 
         //console.log(game);
         output.push(game);
-
     }
 
     logger.info(JSON.stringify(output));
