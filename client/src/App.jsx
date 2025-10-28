@@ -33,17 +33,19 @@ function App() {
     }, [query, filters, currentPage]);
 
     useEffect(() => {
-        setTimeout(() => {
-            let el = $(".ndo-video");
+        //setTimeout(() => {
+            let vids = $(".ndo-video");
 
-            if(el.length > 0) {
+            vids.trigger("pause");
+            //vids.prop('muted', true);
+
+            if(vids.length > 0) {
                 $(".ndo-video").each(function(index, el) {
-                    el.pause();
                     el.currentTime = 0;
                 });
             }
 
-        }, 1000 )
+        //}, 250 )
 
     }, [resGames]);
 
