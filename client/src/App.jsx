@@ -11,7 +11,7 @@ import $ from 'jquery';
 
 function App() {
     const [query, setQuery] = useState("");
-    let [filters, setFilters] = useState({sort_by:"featured", sort_dir:"", "game_category":[],"sales":[], "format":"all", "console":"all","availability":[],"price_range":"all"});
+    let [filters, setFilters] = useState({sort_by:"", sort_dir:"", game_category:[], sales:false, demo:false, format:"", console:"", availability:[], price_range:0});
     let [currentPage, setCurrentPage] = useState(1);
     const [resGames, setResGames] = useState([]);
     const [hasMore, setHasMore] = useState(false);
@@ -79,7 +79,7 @@ function App() {
 
     return (
         <>
-            <div className="" style={{ position:"fixed", top:"0", left:"0", width:"100vw", zIndex:"100", padding:"20px", backgroundColor:"#d3d3d3" }}>
+            <div className="" style={{ position:"fixed", top:"0", left:"0", width:"100vw", zIndex:"100", padding:"20px", backgroundColor:"#36454F" }}>
                 <Searchbar sendToParent={dataFromSearchBar} query={query} filters={filters}></Searchbar>
             </div>
             <div className="col-lg-10 offset-lg-1 hide-scroll" id="scroll-container" style={{ margin:"100px auto", minHeight: '100vh', overflowY: 'scroll' }}>

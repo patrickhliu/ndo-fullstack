@@ -78,6 +78,7 @@ export const getAll = async(req, res) => {
         constraints.where[Op.and].push([
             sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\'')), 1),
             sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\'')), 1),
+            sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1),
         ]);
     } else if(queryFilters.game_category =="featured") {
         constraints.where.is_featured =  { [Op.gte]: true }
@@ -88,13 +89,21 @@ export const getAll = async(req, res) => {
             sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\'')), 1),
         ]);
     } else if(queryFilters.game_category == "both") {
-        constraints.where.dlc_type = { [Op.like]: '%bundle%' }
+        constraints.where.dlc_type = { [Op.like]: '%rom bundle%' }
         /* if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
 
         constraints.where[Op.and].push([
             sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\'')), 1),
         ]); */
-    } else if(queryFilters.game_category == "demo") {
+    } else if(queryFilters.game_category == "upgrade") {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1),
+        ]);
+    }
+
+    if(queryFilters.demo) {
         if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
 
         constraints.where[Op.and].push([
@@ -116,7 +125,7 @@ export const getAll = async(req, res) => {
         ]);
     }
 
-    if(queryFilters.sales == "sales") {
+    if(queryFilters.sales) {
         constraints.where.sale_price = { [Op.not]: null }
     }
 

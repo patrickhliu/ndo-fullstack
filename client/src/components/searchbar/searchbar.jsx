@@ -27,10 +27,12 @@ function searchbar(props) {
         <Row>
             <Col></Col>
             <Col></Col>
-            <Col xs={6}>
+            <Col></Col>
+            <Col></Col>
+            <Col xs={4}>
                 <InputGroup>
-                    <Form.Control placeholder="Search..." onChange={(e) => setQuery(e.target.value)} value={query} style={{ border:"2px solid #111"}}/>
-                    <Button className="bg-khaki-br" onClick={search}>Search</Button>
+                    <Form.Control placeholder="Search..." onChange={(e) => setQuery(e.target.value)} value={query}/>
+                    <Button className="bg-steel-blue" onClick={search}>Search</Button>
                 </InputGroup>
             </Col>
             <Col xs={2}>

@@ -8,7 +8,7 @@ function gameCard({ mesureRef, game, index}) {
   return (
     <Card index={index} className={ index % 3 == 0 ? "col-lg-3 my-3 d-inline-block" : "col-lg-3 offset-lg-1 my-3 d-inline-block"} ref={mesureRef}>
         <Card.Title className="bg-cherry m-0 p-0 py-2" style={{ margin:0 }}>
-            <p className="m-0 p-0 py-2 ms-2 d-inline-block font-16" style={{ width:"max-content" }}><b>{game.title}</b></p>
+            <p className="m-0 p-0 py-2 ms-2 d-inline-block font-16 w-100 text-truncate text-nowrap"><b>{game.title}</b></p>
         </Card.Title>
         <Card.Body>
             { game.photo_gallery.length == 1 && <img src={game.photo_gallery[0].src} className="w-100" /> }
@@ -33,12 +33,12 @@ function gameCard({ mesureRef, game, index}) {
                     <span className="ms-2">(Expires {game.discount_ends} Days)</span>
                 </Badge> }
                 <br/>
-                { game.availability.includes("Pre-order") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Pre-Order</Badge> }
+                {/* { game.availability.includes("Pre-order") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Pre-Order</Badge> }
                 { game.availability.includes("New releases") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">New Release</Badge> }
-                { game.availability.includes("Available now") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Available Now</Badge> }
+                { game.availability.includes("Available now") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Available Now</Badge> } */}
 
-                { !game.release_future && <Badge className="font-14 mt-2 d-inline-block" bg="black-br">Released - {game.release_date}</Badge> }
-                { game.release_future && <Badge className="font-14 mt-2 d-inline-block" bg="black-br">Available - {game.release_date} (In {game.release_future_days} Days)</Badge> }
+                { !game.release_future && <Badge className="font-14 mt-2 d-inline-block" bg="black-br">Released On {game.release_date}</Badge> }
+                { game.release_future && <Badge className="font-14 mt-2 d-inline-block" bg="black-br">Available On {game.release_date} (In {game.release_future_days} Days)</Badge> }
                 <br/>
                 { game.editions.includes("Digital") && game.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Digital - {game.file_size}</Badge> }
                 { game.editions.includes("Digital") && !game.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Digital</Badge> }
@@ -49,8 +49,8 @@ function gameCard({ mesureRef, game, index}) {
                 { game.is_bundle && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Game + DLC</Badge> }
                 { game.is_demo_available && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Demo Available</Badge> }
                 <br/>
-                { game.software_publisher && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Publisher - {game.software_publisher}</Badge> }
-
+                { game.software_publisher && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Published By {game.software_publisher}</Badge> }
+{/* how do i link dlc content to the full game? */}
             </div>
         </Card.Body>
         {/* <div class="card-footer">

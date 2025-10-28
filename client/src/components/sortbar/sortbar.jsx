@@ -12,7 +12,7 @@ const sortbar = (props) => {
         const promise = new Promise((resolve, reject) => {
             Object.keys(obj).forEach(key => {
                 //console.log(`Key: ${key}, Value: ${obj[key]}`);
-                if(["sales"].indexOf(key) >= 0) {
+                if([].indexOf(key) >= 0) {
                     if(obj[key]) {
                         if(cloneFilters[key].includes(obj[key])) {
                             let index = cloneFilters[key].indexOf(obj[key]);
@@ -46,7 +46,7 @@ const sortbar = (props) => {
 
     return (
     <>
-    <button class="btn bg-khaki-br" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">Filter + Sort</button>
+    <button class="btn bg-steel-blue" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">Filter + Sort</button>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasFiltersLabel">Filter + Sort</h5>
@@ -62,19 +62,19 @@ const sortbar = (props) => {
                     <div id="accordionSortByList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"title", sort_dir:"asc"}); }}>
                             Title <i className="fa-solid fa-arrow-down-a-z"></i>
-                            {props.filters.sort_by == "title" && props.filters.sort_dir == "asc" && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            {props.filters.sort_by == "title" && props.filters.sort_dir == "asc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"title", sort_dir:"desc"}); }}>
                             Title <i className="fa-solid fa-arrow-down-z-a"></i>
-                            {props.filters.sort_by == "title" && props.filters.sort_dir == "desc" && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            {props.filters.sort_by == "title" && props.filters.sort_dir == "desc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"price", sort_dir:"asc"}); }}>
                             Price <i className="fa-solid fa-arrow-down-1-9"></i>
-                            {props.filters.sort_by == "price" && props.filters.sort_dir == "asc" && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            {props.filters.sort_by == "price" && props.filters.sort_dir == "asc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"price", sort_dir:"desc"}); }}>
                             Price <i className="fa-solid fa-arrow-down-9-1"></i>
-                            {props.filters.sort_by == "price" && props.filters.sort_dir == "desc" && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            {props.filters.sort_by == "price" && props.filters.sort_dir == "desc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                     </div>
                 </div>
@@ -84,22 +84,22 @@ const sortbar = (props) => {
                     </h2>
                     <div id="accordionPriceList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         {/* <div class="accordion-body pointer" onClick={() => { clickFilter({price_range:0}); }}>
-                            Free {props.filters.price_range == 0 && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Free {props.filters.price_range == 0 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div> */}
                         <div class="accordion-body pointer" onClick={() => { clickFilter({price_range:1}); }}>
-                            $0 - $9.99 {props.filters.price_range == 1 && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            $0 - $9.99 {props.filters.price_range == 1 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({price_range:2}); }}>
-                            $10 - $19.99 {props.filters.price_range == 2 && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            $10 - $19.99 {props.filters.price_range == 2 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({price_range:3}); }}>
-                            $20 - $39.99 {props.filters.price_range == 3 && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            $20 - $39.99 {props.filters.price_range == 3 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({price_range:4}); }}>
-                            $40+ {props.filters.price_range == 4 && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            $40+ {props.filters.price_range == 4 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         {/* <div class="accordion-body pointer" onClick={() => { clickFilter({price_range:"all"}); }}>
-                            All {props.filters.price_range == "all" && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            All {props.filters.price_range == "all" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div> */}
                     </div>
                 </div>
@@ -109,22 +109,22 @@ const sortbar = (props) => {
                     </h2>
                     <div id="accordionGameCategoryList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({game_category:"featured", sort_dir:""}); }}>
-                            Featured {props.filters.game_category == "featured" && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Featured {props.filters.game_category == "featured" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({game_category:"games"}); }}>
-                            Full Games {props.filters.game_category.includes("games") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Full Games {props.filters.game_category.includes("games") && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({game_category:"dlc"}); }}>
-                            DLC {props.filters.game_category.includes("dlc") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            DLC {props.filters.game_category.includes("dlc") && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({game_category:"both"}); }}>
-                            Full Games + DLC Bundles {props.filters.game_category.includes("both") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Full Games + DLC Bundles {props.filters.game_category.includes("both") && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
-                        <div class="accordion-body pointer" onClick={() => { clickFilter({game_category:"demo"}); }}>
-                            Has Demo {props.filters.game_category.includes("demo") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                        <div class="accordion-body pointer" onClick={() => { clickFilter({game_category:"upgrade"}); }}>
+                            Switch 2 Upgrade Pack {props.filters.game_category.includes("upgrade") && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         {/* <div class="accordion-body pointer" onClick={() => { clickFilter({game_category:"voucher"}); }}>
-                            Voucher {props.filters.game_category.includes("voucher") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Voucher {props.filters.game_category.includes("voucher") && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div> */}
                     </div>
                 </div>
@@ -134,24 +134,24 @@ const sortbar = (props) => {
                     </h2>
                     <div id="accordionEditionsList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({format:"digital"}); }}>
-                            Digital {props.filters.format.includes("digital") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Digital {props.filters.format.includes("digital") && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({format:"physical"}); }}>
-                            Physical {props.filters.format.includes("physical") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Physical {props.filters.format.includes("physical") && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         {/* <div class="accordion-body pointer" onClick={() => { clickFilter({format:"all"}); }}>
-                            Both {props.filters.format.includes("all") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Both {props.filters.format.includes("all") && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div> */}
                     </div>
                 </div>
                 <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionSalesList" aria-expanded="false" aria-controls="accordionSalesList">Sales</button>
-                    </h2>
-                    <div id="accordionSalesList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
-                        <div class="accordion-body pointer" onClick={() => { clickFilter({sales:"sales"}); }}>
-                            On Sale {props.filters.sales.includes("sales") && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
-                        </div>
+                    <div class="accordion-body pointer" onClick={() => { clickFilter({demo:true}); }}>
+                        Has Demo {props.filters.demo == true && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-body pointer" onClick={() => { clickFilter({sales:true}); }}>
+                        On Sale {props.filters.sales == true && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                     </div>
                 </div>
                 <div class="accordion-item">
@@ -160,13 +160,13 @@ const sortbar = (props) => {
                     </h2>
                     <div id="accordionPlatformList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({ console:"switch1"}); }}>
-                            Switch {props.filters.console == "switch1" && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Switch {props.filters.console == "switch1" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({ console:"switch2"}); }}>
-                            Switch 2 {props.filters.console == "switch2" && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Switch 2 {props.filters.console == "switch2" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         {/* <div class="accordion-body pointer" onClick={() => { clickFilter({console:"all"}); }}>
-                            Both {props.filters.console == "all" && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Both {props.filters.console == "all" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div> */}
                     </div>
                 </div>
@@ -176,16 +176,16 @@ const sortbar = (props) => {
                     </h2>
                     <div id="accordionAvailabilityList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({ availability:1}); }}>
-                            Available Now { props.filters.availability == 1 && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Available Now { props.filters.availability == 1 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({ availability:2}); }}>
-                            Coming Soon { props.filters.availability == 2 && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Coming Soon { props.filters.availability == 2 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({ availability:3}); }}>
-                            New Releases { props.filters.availability == 3 && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            New Releases { props.filters.availability == 3 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({ availability:4}); }}>
-                            Pre-Order { props.filters.availability == 4 && <i className="mt-1 fa-regular fa-circle-check float-end"></i>}
+                            Pre-Order { props.filters.availability == 4 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                     </div>
                 </div>
