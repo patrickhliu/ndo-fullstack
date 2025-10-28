@@ -53,7 +53,7 @@ const sortbar = (props) => {
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <p>Applied Filters....</p>
+            {/* <p>Applied Filters....</p> */}
             <div class="accordion" id="accordionDiv">
                 <div class="accordion-item">
                     <h2 class="accordion-header">

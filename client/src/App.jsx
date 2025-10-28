@@ -12,56 +12,42 @@ function App() {
     const [query, setQuery] = useState("");
     let [filters, setFilters] = useState({sort_by:"featured", sort_dir:"", "game_category":[],"sales":[], "format":"all", "console":"all","availability":[],"price_range":"all"});
     let [currentPage, setCurrentPage] = useState(1);
-
-    const [apiResponse, setApiResponse] = useState({games:[], count:{}, total_pages:1});
     const [resGames, setResGames] = useState([]);
-    //const [resGames, setResGames] = useState([]);
-    //const [resGames, setResGames] = useState([]);
     const [hasMore, setHasMore] = useState(false);
     const { measureRef, isIntersecting, observer } = useOnScreen();
 
     useEffect(() => {
         if (isIntersecting && hasMore) {
-            setCurrentPage(currentPage => currentPage + 1);
-            console.log("load more..." + currentPage);
-            executeSearch();
+            let nextPage = parseInt(currentPage) + 1;
+            setCurrentPage(nextPage);
             observer.disconnect();
         }
+
+        // this should only be for scrolling down...
+        // if they change a filter or search term, default back to page 1...
     }, [isIntersecting, hasMore]);
 
     useEffect(() => {
-
-    }, [currentPage]);
-
-    useEffect(() => {
         executeSearch();
-    }, [filters]);
+    }, [query, filters, currentPage]);
 
     useEffect(() => {
-        executeSearch();
-    }, [query]);
 
-    useEffect(() => {
-        setResGames([].concat(apiResponse.games));
-
-        /* if(currentPage == 1) {
-            setResGames([].concat(apiResponse.games));
-        } else {
-            setResGames(resGames.concat(apiResponse.games));
-        } */
-    }, [apiResponse]);
+    }, [resGames]);
 
     async function executeSearch() {
-        //console.log("execute search...", {query:query, currentPage:currentPage, filters:filters});
+        console.log("execute search...", {query:query, currentPage:currentPage, filters:filters});
 
         try {
             const response = await axios("http://localhost:8080/nintendo/all?q=" + query + "&current_page=" + currentPage + "&filters=" + JSON.stringify(filters));
             //console.log(response.data);
-            setApiResponse(response.data);
-            setHasMore(true);
-            /* if (response.data.length === 0) {
-                setHasMore(false);
-            } */
+            if(currentPage == 1) {
+                setResGames([].concat(response.data.games));
+            } else {
+                setResGames(resGames.concat(response.data.games));
+            }
+
+            setHasMore(response.data.hasMore);
         } catch (error) {
             console.error("Error fetching data:", error);
             setHasMore(false);
@@ -69,9 +55,10 @@ function App() {
     }
 
     function dataFromSearchBar(data) {
-        console.log("data from searchbar", data);
+        //console.log("data from searchbar", data);
         setQuery(data.query);
         setFilters(data.filters);
+        setCurrentPage(1);
     }
 
     //const imageUrl = 'https://place-hold.it/500x500/666'; // Replace with your remote image URL

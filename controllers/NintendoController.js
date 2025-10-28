@@ -159,6 +159,12 @@ export const getAll = async(req, res) => {
 
     let dbResults = await NintendoGame.findAll(constraints);
 
+    delete constraints.offset;
+    delete constraints.limit;
+    let dbResultsCount = await NintendoGame.count(constraints);
+
+    console.log(dbResultsCount);
+
     /* let dbResults = await NintendoGame.findAll({
         where: sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1)
     }); */
@@ -303,14 +309,6 @@ export const getAll = async(req, res) => {
     // {results:[], count:{}, total_pages:0}
     res.json({
         games: output,
-        count: {
-             dlc: 0,
-             deals: 0,
-             games_dlc: 0,
-             demo: 0,
-             voucher: 0,
-             upgrade: 0,
-        },
-        total_pages: 1,
+        hasMore: dbResultsCount > (req.query.current_page * take)
     });
 };
