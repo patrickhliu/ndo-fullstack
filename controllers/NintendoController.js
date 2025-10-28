@@ -23,9 +23,141 @@ export const getAll = async(req, res) => {
     // Logic to fetch all users from a database or other source
     //res.status(200).json({ message: 'Getting all users' });
     //let offset = 0;
+    //console.log(JSON.parse(req.query.filters));
+    let queryFilters = JSON.parse(req.query.filters);
+
     let take = 24;
-    let skip = req.query.current_page-- * take
+    let skip = (req.query.current_page - 1) * take
     let output = [];
+
+    let constraints = {
+        where: {
+            //is_featured:true,
+        },
+        offset: skip,
+        limit: take,
+    };
+
+    if(req.query.q) {
+        constraints.where.title = { [Op.like]: '%' + req.query.q + '%' }
+    }
+
+    if(queryFilters.sort_by == "title") {
+        constraints.order = [['title', 'ASC']]
+
+        if(queryFilters.sort_dir == "desc") {
+            constraints.order = [['title', 'DESC']]
+        }
+    }
+
+    if(queryFilters.sort_by == "price") {
+        constraints.order = [['regular_price', 'ASC']]
+
+        if(queryFilters.sort_dir == "desc") {
+            constraints.order = [['regular_price', 'DESC']]
+        }
+    }
+
+    if(queryFilters.price_range == 0) {
+        // free to start...
+    } else if(queryFilters.price_range == 1) {
+        constraints.where.regular_price =  { [Op.gte]: 0, [Op.lte]: 9.99 }
+    } else if(queryFilters.price_range == 2) {
+        constraints.where.regular_price =  { [Op.gte]: 10, [Op.lte]: 19.99 }
+    } else if(queryFilters.price_range == 3) {
+        constraints.where.regular_price =  { [Op.gte]: 20, [Op.lte]: 39.99 }
+    } else if(queryFilters.price_range == 4) {
+        constraints.where.regular_price =  { [Op.gte]: 40 }
+    } else if(queryFilters.price_range == 5) {
+        // "all"
+    }
+
+    if(queryFilters.game_category == "games") {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\'')), 1),
+            sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\'')), 1),
+        ]);
+    } else if(queryFilters.game_category =="featured") {
+        constraints.where.is_featured =  { [Op.gte]: true }
+    } else if(queryFilters.game_category =="dlc") {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\'')), 1),
+        ]);
+    } else if(queryFilters.game_category == "both") {
+        constraints.where.dlc_type = { [Op.like]: '%bundle%' }
+        /* if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\'')), 1),
+        ]); */
+    } else if(queryFilters.game_category == "demo") {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Demo available"\'')), 1),
+        ]);
+    }
+
+    if(queryFilters.format == "physical") {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('editions'), sequelize.literal('\'"Physical"\'')), 1),
+        ]);
+    } else if(queryFilters.format == "digital") {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('editions'), sequelize.literal('\'"Digital"\'')), 1),
+        ]);
+    }
+
+    if(queryFilters.sales == "sales") {
+        constraints.where.sale_price = { [Op.not]: null }
+    }
+
+    if(queryFilters.console == "switch1") {
+        constraints.where.platform_code = { [Op.eq]: "NINTENDO_SWITCH" };
+    } else if(queryFilters.console == "switch2") {
+        constraints.where.platform_code = { [Op.eq]: "NINTENDO_SWITCH_2" };
+    }
+
+    console.log(queryFilters.availability);
+
+    if(queryFilters.availability == 1) {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'["Available now"]\'')), 1),
+        ]);
+    } else if(queryFilters.availability == 2) {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'["Coming soon"]\'')), 1),
+        ]);
+    } else if(queryFilters.availability == 3) {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'["New releases"]\'')), 1),
+        ]);
+    } else if(queryFilters.availability == 4) {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'["Pre-order"]\'')), 1),
+        ]);
+    }
+
+    console.log('-----------------------');
+    console.log(constraints);
+
+    let dbResults = await NintendoGame.findAll(constraints);
 
     /* let dbResults = await NintendoGame.findAll({
         where: sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1)
@@ -47,30 +179,30 @@ export const getAll = async(req, res) => {
         }]
     }, */
 
-    let dbResults = await NintendoGame.findAll({
+    /* let dbResults2 = await NintendoGame.findAll({
         where: {
             is_featured: {
                 [Op.eq]: true,
             }
-            /* [Op.and]: [
+            [Op.and]: [
                 sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\'')), 1),
                 //sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\'')), 1),
                 sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1),
                 sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Deals"\'')), 1),
                 //sequelize.where(sequelize.fn('LOWER', sequelize.col('software_publisher')), "nintendo"),
-            ], */
-            /* title: {
+            ],
+            title: {
                 [Op.like]: "%donkey kong%",
-            }, */
+            },
 
         },
-        //where: sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1),
-        //where: sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ), 1),
-        /* where: sequelize.where(
+        where: sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1),
+        where: sequelize.where(sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ), 1),
+        where: sequelize.where(
             sequelize.fn('NOT JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"DLC"\''), ), 1
-        ), */
+        ),
 
-        /* orWhere: sequelize.where(
+        orWhere: sequelize.where(
             //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
             sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Games with DLC"\''), ),
             1
@@ -79,10 +211,10 @@ export const getAll = async(req, res) => {
             //sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\''), ), 1
             sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\''), ),
             1
-        ), */
+        ),
         offset: skip,
         limit: take,
-    });
+    }); */
 
     //logger.info(JSON.stringify(dbResults));
 
@@ -157,6 +289,7 @@ export const getAll = async(req, res) => {
             is_bundle: !o.dlc_type ? false : o.dlc_type.includes("Bundle"),
             is_upgrade: o.is_upgrade,
             editions: !o.editions ? [] : o.editions,
+            availability: !o.availability ? [] : o.availability,
             //walmart_url: o.walmart_url,
         }
 

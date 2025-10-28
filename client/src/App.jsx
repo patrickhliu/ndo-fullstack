@@ -10,7 +10,7 @@ import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
     const [query, setQuery] = useState("");
-    const [filters, setFilters] = useState({sort_by:"featured", sort_dir:"", "game_category":[],"sales":[], "format":"all", "console":"all","availability":[],"price_range":"all"});
+    let [filters, setFilters] = useState({sort_by:"featured", sort_dir:"", "game_category":[],"sales":[], "format":"all", "console":"all","availability":[],"price_range":"all"});
     let [currentPage, setCurrentPage] = useState(1);
 
     const [apiResponse, setApiResponse] = useState({games:[], count:{}, total_pages:1});
@@ -34,7 +34,21 @@ function App() {
     }, [currentPage]);
 
     useEffect(() => {
-        setResGames(resGames.concat(apiResponse.games));
+        executeSearch();
+    }, [filters]);
+
+    useEffect(() => {
+        executeSearch();
+    }, [query]);
+
+    useEffect(() => {
+        setResGames([].concat(apiResponse.games));
+
+        /* if(currentPage == 1) {
+            setResGames([].concat(apiResponse.games));
+        } else {
+            setResGames(resGames.concat(apiResponse.games));
+        } */
     }, [apiResponse]);
 
     async function executeSearch() {
@@ -55,8 +69,9 @@ function App() {
     }
 
     function dataFromSearchBar(data) {
-        //console.log("data from searchbar", data);
-        executeSearch();
+        console.log("data from searchbar", data);
+        setQuery(data.query);
+        setFilters(data.filters);
     }
 
     //const imageUrl = 'https://place-hold.it/500x500/666'; // Replace with your remote image URL
