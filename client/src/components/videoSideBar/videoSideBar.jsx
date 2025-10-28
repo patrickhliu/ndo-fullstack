@@ -28,7 +28,7 @@ function videoSideBar(props) {
                 </div>
                 <div class="offcanvas-body">
                     { props.obj.video_gallery.map((v, i) => (
-                        <video className={"w-100 mb-5 footage-" + props.obj.nsuid} controls="true" autoplay="false" name="media">
+                        <video className={"ndo-video w-100 mb-5 footage-" + props.obj.nsuid} controls="true" autoplay="false" name="media" key={i}>
                             <source src={v.src} type="video/mp4"/>
                         </video>
                     ))}

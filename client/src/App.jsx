@@ -7,6 +7,7 @@ import Searchbar from './components/searchbar/searchbar';
 import GameCard from './components/gameCard/gameCard';
 import './assets/pat.scss';
 import useOnScreen from "./hooks/useOnScreen";
+import $ from 'jquery';
 
 function App() {
     const [query, setQuery] = useState("");
@@ -32,6 +33,17 @@ function App() {
     }, [query, filters, currentPage]);
 
     useEffect(() => {
+        setTimeout(() => {
+            let el = $(".ndo-video");
+
+            if(el.length > 0) {
+                $(".ndo-video").each(function(index, el) {
+                    el.pause();
+                    el.currentTime = 0;
+                });
+            }
+
+        }, 1000 )
 
     }, [resGames]);
 
