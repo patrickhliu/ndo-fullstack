@@ -38,9 +38,9 @@ export const getAll = async(req, res) => {
         limit: take,
     };
 
-    //constraints.where.title = { [Op.like]: '%bananza%' }
+    constraints.where.title = { [Op.like]: '%bananza%' }
     if(req.query.q) {
-        constraints.where.title = { [Op.like]: '%' + req.query.q + '%' }
+        //constraints.where.title = { [Op.like]: '%' + req.query.q + '%' }
     }
 
     if(queryFilters.sort_by == "title") {

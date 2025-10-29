@@ -58,17 +58,17 @@ function gameCard({ mesureRef, game, index}) {
         </Card.Body>
         { game.is_dlc_available && game.dlc_data.length > 0 && (
             <Card.Footer>
-                <h6><b>DLC</b></h6>
+                <p class="m-0 p-0 font-14"><b>DLC</b></p>
                 { game.dlc_data.map(d => (
                     <div key={d.id}>
-                        <a class="font-12 me-2" target="_blank" href={"https://www.nintendo.com/" + d.url} style={{ textDecoration:"none", color:"#111"}}>
+                        <a class="font-14 me-2" target="_blank" href={"https://www.nintendo.com/" + d.url} style={{ textDecoration:"none", color:"#111"}}>
                             <b>{d.title}</b>
                         </a>
-                        { !d.sale_price && d.regular_price && <span className="font-12 mt-2 me-2 d-inline-block">${d.regular_price}</span> }
-                        { d.sale_price && d.regular_price && <span className="font-12 mt-2 me-2 d-inline-block">
+                        { !d.sale_price && d.regular_price && <span className="font-14 mt-2 me-2 d-inline-block"><b>${d.regular_price}</b></span> }
+                        { d.sale_price && d.regular_price && <span className="font-14 mt-2 me-2 d-inline-block">
                             <span style={{ textDecoration: 'line-through' }}>${d.regular_price}</span>
-                            <span className="ms-2">${d.sale_price}</span>
-                            <i class="fa-regular fa-circle-down ms-2"></i><span>{d.discount_percent}%</span>
+                            <span className="ms-2"><b>${d.sale_price}</b></span>
+                            {/* <i class="fa-regular fa-circle-down ms-2"></i><span><b>{d.discount_percent}%</b></span> */}
                             {/* <span className="ms-2">(Expires {game.discount_ends} Days)</span> */}
                         </span> }
                     </div>
