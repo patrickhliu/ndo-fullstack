@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import '../../assets/pat.scss';
@@ -7,7 +8,7 @@ import VideoSideBar from '../../components/videoSideBar/videoSideBar';
 function gameCard({ mesureRef, game, index}) {
     console.log(game);
 
-  return (
+    return (
     <Card index={index} className={ index % 3 == 0 ? "col-lg-3 my-3 d-inline-block" : "col-lg-3 offset-lg-1 my-3 d-inline-block"} ref={mesureRef}>
         <Card.Title className="bg-cherry m-0 p-0 py-2" style={{ margin:0 }}>
             <p className="m-0 p-0 py-2 ms-2 d-inline-block font-16 w-100 text-truncate text-nowrap"><b>{game.title}</b></p>
@@ -57,9 +58,21 @@ function gameCard({ mesureRef, game, index}) {
         </Card.Body>
         { game.is_dlc_available && game.dlc_data.length > 0 && (
             <Card.Footer>
-                { game.dlc_data.map((o, i) => {
-                    <span key={i}>{ o.title }</span>
-                })}
+                <h6><b>DLC</b></h6>
+                { game.dlc_data.map(d => (
+                    <div key={d.id}>
+                        <a class="font-12 me-2" target="_blank" href={"https://www.nintendo.com/" + d.url} style={{ textDecoration:"none", color:"#111"}}>
+                            <b>{d.title}</b>
+                        </a>
+                        { !d.sale_price && d.regular_price && <span className="font-12 mt-2 me-2 d-inline-block">${d.regular_price}</span> }
+                        { d.sale_price && d.regular_price && <span className="font-12 mt-2 me-2 d-inline-block">
+                            <span style={{ textDecoration: 'line-through' }}>${d.regular_price}</span>
+                            <span className="ms-2">${d.sale_price}</span>
+                            <i class="fa-regular fa-circle-down ms-2"></i><span>{d.discount_percent}%</span>
+                            {/* <span className="ms-2">(Expires {game.discount_ends} Days)</span> */}
+                        </span> }
+                    </div>
+                ))}
             </Card.Footer>
         )}
     </Card>
