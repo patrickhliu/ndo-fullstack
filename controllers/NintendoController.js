@@ -19,6 +19,39 @@ const logger = winston.createLogger({
     ]
 });
 
+const refactorPhotoObj = (obj) => {
+    return { src: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + obj.publicId, width:1280, height:720 };
+}
+
+const refactorVideoObj = (obj) => {
+    if(obj.resourceType != "video") return null;
+    return { src: "https://assets.nintendo.com/video/upload/ar_16:9,w_1280/" + obj.publicId, width:1280, height:720 }
+}
+
+const refactorPhotoGallery = async (firstPhoto, gallery) => {
+    let output = [firstPhoto];
+
+    for(let o of gallery) {
+        if(o.resourceType != "image") continue;
+        let r = await refactorPhotoObj(o);
+        output.push(r);
+    }
+
+    return output;
+}
+
+const refactorVideoGallery = async (gallery) => {
+    let output = [];
+
+    for(let o of gallery) {
+        if(o.resourceType != "video") continue;
+        let r = await refactorVideoObj(o);
+        output.push(r);
+    }
+
+    return output;
+}
+
 export const getAll = async(req, res) => {
     // Logic to fetch all users from a database or other source
     //res.status(200).json({ message: 'Getting all users' });
@@ -258,7 +291,7 @@ console.log(queryFilters);
             discountEnds = o.discount_price_end_timestamp * 1000;
         }
 
-        if(o.product_gallery) {
+        /* if(o.product_gallery) {
             for(let m of o.product_gallery) {
                 if(m.resourceType == "image") {
                     photoGallery.push({
@@ -276,7 +309,7 @@ console.log(queryFilters);
                     });
                 }
             }
-        }
+        } */
 
         let game = {
             id: o.id,
@@ -295,8 +328,8 @@ console.log(queryFilters);
             file_size: o.file_size,
             software_publisher: o.software_publisher,
             software_developer: o.software_developer,
-            photo_gallery: photoGallery,
-            video_gallery: videoGallery,
+            photo_gallery: await refactorPhotoGallery({src: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + o.product_image, width:1280, height:720 }, o.product_gallery),
+            video_gallery: await refactorVideoGallery(o.product_gallery),
             url: o.url,
             url_key: o.url_key,
             top_level_filters: !o.top_level_filters ? [] : o.top_level_filters,
@@ -318,7 +351,8 @@ console.log(queryFilters);
             tmpKey = tmpKey.join("-");
             console.log(tmpKey);
 
-            game.dlc_data = await NintendoGame.findAll({
+            //let records
+            let records = await NintendoGame.findAll({
                 where: {
                     url_key: {
                         [Op.like]: '%' + tmpKey + '%', // Use % as a wildcard
@@ -334,8 +368,29 @@ console.log(queryFilters);
 
                     },
                 },
-                attributes: ["title", "nsuid", "regular_price", "sale_price", "amount_off", "percent_off", "platform_code", "url"]
+                //attributes: ["title", "nsuid", "regular_price", "sale_price", "amount_off", "percent_off", "platform_code", "url"]
             });
+
+            for(let r of records) {
+                let releaseDate = new Date(o.release_date);
+
+                game.dlc_data.push({
+                    title: r.title,
+                    nsuid: r.nsuid,
+                    release_date: releaseDate.toLocaleString('en-US', options),
+                    release_future: releaseDate > now,
+                    release_future_days: (releaseDate > now) ? Math.round(Math.abs(((Math.floor(releaseDate.getTime())) - now) / oneDay)) : null,
+                    regular_price: r.regular_price,
+                    sale_price: r.sale_price,
+                    amount_off: r.amount_off,
+                    percent_off: r.percent_off,
+                    platform_code: r.platform_code,
+                    url: r.url,
+                    photo_gallery: await refactorPhotoGallery({src: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + r.product_image, width:1280, height:720 }, r.product_gallery),
+                    video_gallery: await refactorVideoGallery(r.product_gallery),
+                    file_size: r.file_size,
+                });
+            }
 
             //console.log(game.dlc_data);
         }

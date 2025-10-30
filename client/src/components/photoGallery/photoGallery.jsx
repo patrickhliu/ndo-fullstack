@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import { Autoplay, Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination, Scrollbar, A11y, EffectFade } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -25,7 +25,7 @@ function photoGallery(props) {
 
   return (
     <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-    <Swiper className="w-100" modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]} slidesPerView={1} scrollbar={true} >
+    <Swiper className="w-100" modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y, EffectFade]} slidesPerView={1} scrollbar={false} navigation={false} spaceBetween={30} effect={'fade'}>
 
     {props.photos.map((p, i) => (
         <SwiperSlide className="w-100" key={i}>
