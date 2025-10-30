@@ -52,7 +52,7 @@ function photoGallery(props) {
         </Swiper>
     </div>
     <Swiper
-        className="mb-3"
+        className=""
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
         slidesPerView={4}

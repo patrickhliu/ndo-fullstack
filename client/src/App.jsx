@@ -50,7 +50,7 @@ function App() {
     }, [resGames]);
 
     async function executeSearch() {
-        console.log("execute search...", {query:query, currentPage:currentPage, filters:filters});
+        //console.log("execute search...", {query:query, currentPage:currentPage, filters:filters});
 
         try {
             const response = await axios("http://localhost:8080/nintendo/all?q=" + query + "&current_page=" + currentPage + "&filters=" + JSON.stringify(filters));

@@ -19,15 +19,14 @@ function gameCard({ mesureRef, game, index}) {
             { game.photo_gallery.length == 1 && <img src={game.photo_gallery[0].src} className="w-100" /> }
             { game.photo_gallery.length > 1 && <PhotoGallery photos={game.photo_gallery}></PhotoGallery> }
             <div>
-                { game.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-14 me-2 bg-cherry py-2 px-2" style={{ border:"none" }}>
-                    <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/" style={{ textDecoration:"none", color:"#D2042D"}}><b>Switch</b></a>
-                    <b>Switch</b>
+                { game.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-14 mt-2 me-2 bg-cherry py-2 px-2" style={{ border:"none" }}>
+                    <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/" style={{ textDecoration:"none", color:"#fff"}}><b>Switch</b></a>
                 </Badge> }
-                { game.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-14 me-2 bg-cherry-inv-br py-2 px-2" style={{ border:"none" }}>
+                { game.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-14 mt-2 me-2 bg-cherry-inv-br py-2 px-2" style={{ border:"none" }}>
                     <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-2-system-123669/" style={{ textDecoration:"none", color:"#D2042D"}}><b>Switch 2</b></a>
                 </Badge> }
 
-                <Badge className="font-14 me-2 bg-steel-blue py-2 px-2" style={{ border:"none" }}>
+                <Badge className="font-14 mt-2 me-2 bg-steel-blue py-2 px-2" style={{ border:"none" }}>
                     <a target="_blank" href={"https://www.nintendo.com/" + game.url} style={{ textDecoration:"none", color:"#fff"}}><b>eShop</b></a>
                 </Badge>
 
@@ -36,14 +35,14 @@ function gameCard({ mesureRef, game, index}) {
                 { game.is_dlc_available && game.dlc_data.length > 0 && (
                     <DlcModal game={game}></DlcModal>
                 )}
-                <br/>
+
                 {/* <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-heart me-3"></i></p> */}
                 {/* <p className="float-end m-0 p-0 py-2"><i class="fa-regular fa-note-sticky me-3"></i></p> */}
-                { game.is_dlc_content && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Is DLC</Badge> }
+                {/* { game.is_dlc_content && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Stand Alone DLC</Badge> } */}
                 {/* { game.is_dlc_available && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">DLC Available</Badge> } */}
-                { game.is_upgrade && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Upgrade Pack</Badge> }
-                { game.is_bundle && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Game + DLC</Badge> }
-                { game.is_demo_available && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Has Demo</Badge> }
+                {/* { game.is_upgrade && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Upgrade Pack</Badge> } */}
+                {/* { game.is_bundle && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Game + DLC</Badge> } */}
+                {/* { game.is_demo_available && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Has Demo</Badge> } */}
                 <br/>
                 { !game.sale_price && game.regular_price && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">${game.regular_price}</Badge> }
                 { game.sale_price && game.regular_price && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="khaki-br">
@@ -59,9 +58,10 @@ function gameCard({ mesureRef, game, index}) {
                 { !game.release_future && <Badge className="font-14 mt-2 d-inline-block" bg="black-br">Released On {game.release_date}</Badge> }
                 { game.release_future && <Badge className="font-14 mt-2 d-inline-block" bg="black-br">Available On {game.release_date} (In {game.release_future_days} Days)</Badge> }
                 <br/>
-                { game.editions.includes("Digital") && game.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Digital - {game.file_size}</Badge> }
+                { game.editions.includes("Digital") && game.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Digital {game.file_size}</Badge> }
                 { game.editions.includes("Digital") && !game.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Digital</Badge> }
-                { game.editions.includes("Physical") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Physical</Badge> }
+                { game.editions.includes("Physical") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Physical Available</Badge> }
+                <br/>
                 { game.software_publisher && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Published By {game.software_publisher}</Badge> }
             </div>
         </Card.Body>
