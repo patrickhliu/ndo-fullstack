@@ -19,6 +19,24 @@ function gameCard({ mesureRef, game, index}) {
             { game.photo_gallery.length == 1 && <img src={game.photo_gallery[0].src} className="w-100" /> }
             { game.photo_gallery.length > 1 && <PhotoGallery photos={game.photo_gallery}></PhotoGallery> }
             <div>
+                { game.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-14 me-2 bg-cherry py-2 px-2" style={{ border:"none" }}>
+                    <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/" style={{ textDecoration:"none", color:"#D2042D"}}><b>Switch</b></a>
+                    <b>Switch</b>
+                </Badge> }
+                { game.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-14 me-2 bg-cherry-inv-br py-2 px-2" style={{ border:"none" }}>
+                    <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-2-system-123669/" style={{ textDecoration:"none", color:"#D2042D"}}><b>Switch 2</b></a>
+                </Badge> }
+
+                <Badge className="font-14 me-2 bg-steel-blue py-2 px-2" style={{ border:"none" }}>
+                    <a target="_blank" href={"https://www.nintendo.com/" + game.url} style={{ textDecoration:"none", color:"#fff"}}><b>eShop</b></a>
+                </Badge>
+
+                { game.video_gallery.length > 0 && <VideoSideBar obj={game}></VideoSideBar> }
+
+                { game.is_dlc_available && game.dlc_data.length > 0 && (
+                    <DlcModal game={game}></DlcModal>
+                )}
+                <br/>
                 {/* <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-heart me-3"></i></p> */}
                 {/* <p className="float-end m-0 p-0 py-2"><i class="fa-regular fa-note-sticky me-3"></i></p> */}
                 { game.is_dlc_content && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Is DLC</Badge> }
@@ -47,25 +65,6 @@ function gameCard({ mesureRef, game, index}) {
                 { game.software_publisher && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Published By {game.software_publisher}</Badge> }
             </div>
         </Card.Body>
-            <Card.Footer>
-                { game.platform_code == "NINTENDO_SWITCH"   && <button className="font-12 me-3 bg-cherry py-1 px-2" style={{ border:"none" }}>
-                    <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/" style={{ textDecoration:"none", color:"#D2042D"}}><b>Switch</b></a>
-                    <b>Switch</b>
-                </button> }
-                { game.platform_code == "NINTENDO_SWITCH_2" && <button className="font-12 me-3 bg-cherry-inv-br py-1 px-2" style={{ border:"none" }}>
-                    <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-2-system-123669/" style={{ textDecoration:"none", color:"#D2042D"}}><b>Switch 2</b></a>
-                </button> }
-
-                <button className="font-12 me-3 bg-steel-blue py-1 px-2" style={{ border:"none" }}>
-                    <a target="_blank" href={"https://www.nintendo.com/" + game.url} style={{ textDecoration:"none", color:"#fff"}}><b>eShop</b></a>
-                </button>
-
-                { game.video_gallery.length > 0 && <VideoSideBar obj={game}></VideoSideBar> }
-
-                { game.is_dlc_available && game.dlc_data.length > 0 && (
-                    <DlcModal game={game}></DlcModal>
-                )}
-            </Card.Footer>
     </Card>
   )
 }

@@ -11,11 +11,11 @@ function dlcModal({ game }) {
 
   return (
     <>
-        <button type="button" className="font-12 me-3 bg-amaranth py-1 px-2" style={{ border:"none" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <Badge className="font-14 me-2 bg-amaranth py-2 px-2 pointer" style={{ border:"none" }} data-bs-toggle="modal" data-bs-target={"#dlc-modal-" + game.nsuid}>
             <b>DLC ({game.dlc_data.length })</b>
-        </button>
+        </Badge>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id={"dlc-modal-" + game.nsuid} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
