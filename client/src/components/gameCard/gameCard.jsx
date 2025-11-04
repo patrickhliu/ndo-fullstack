@@ -16,7 +16,7 @@ function gameCard({ mesureRef, game, index}) {
             <p className="m-0 p-0 py-2 ms-2 d-inline-block font-16 w-100 text-truncate text-nowrap"><b>{game.title}</b></p>
         </Card.Title>
         <Card.Body>
-            { game.photo_gallery.length == 1 && <img src={game.photo_gallery[0].src} className="w-100" /> }
+            { game.photo_gallery.length == 1 && <><img src={game.photo_gallery[0].src} className="w-100" /><div style={{ height:"70px" }}></div></> }
             { game.photo_gallery.length > 1 && <PhotoGallery photos={game.photo_gallery}></PhotoGallery> }
             <div>
                 { game.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-14 mt-2 me-2 bg-cherry py-2 px-2" style={{ border:"none" }}>
@@ -52,7 +52,7 @@ function gameCard({ mesureRef, game, index}) {
                     <span className="ms-2">(Expires {game.discount_ends} Days)</span>
                 </Badge> }
                 <br/>
-                {/* { game.availability.includes("Pre-order") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Pre-Order</Badge> }
+                {/*
                 { game.availability.includes("New releases") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">New Release</Badge> }
                 { game.availability.includes("Available now") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Available Now</Badge> } */}
                 { !game.release_future && <Badge className="font-14 mt-2 d-inline-block" bg="black-br">Released On {game.release_date}</Badge> }
@@ -61,6 +61,7 @@ function gameCard({ mesureRef, game, index}) {
                 { game.editions.includes("Digital") && game.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Digital {game.file_size}</Badge> }
                 { game.editions.includes("Digital") && !game.file_size && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Digital</Badge> }
                 { game.editions.includes("Physical") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Physical Available</Badge> }
+                { game.availability.includes("Pre-order") && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Pre-Order</Badge> }
                 <br/>
                 { game.software_publisher && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="black-br">Published By {game.software_publisher}</Badge> }
             </div>

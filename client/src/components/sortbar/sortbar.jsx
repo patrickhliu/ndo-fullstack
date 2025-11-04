@@ -57,7 +57,7 @@ const sortbar = (props) => {
             <div class="accordion" id="accordionDiv">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionSortByList" aria-expanded="false" aria-controls="accordionSortByList">Sort By</button>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionSortByList" aria-expanded="false" aria-controls="accordionSortByList"><b>Sort By</b></button>
                     </h2>
                     <div id="accordionSortByList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"title", sort_dir:"asc"}); }}>
@@ -76,11 +76,19 @@ const sortbar = (props) => {
                             Price <i className="fa-solid fa-arrow-down-9-1"></i>
                             {props.filters.sort_by == "price" && props.filters.sort_dir == "desc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
+                        <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"release_date", sort_dir:"asc"}); }}>
+                            Release Date <i className="fa-solid fa-arrow-down-1-9"></i>
+                            {props.filters.sort_by == "release_date" && props.filters.sort_dir == "asc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
+                        </div>
+                        <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"release_date", sort_dir:"desc"}); }}>
+                            Release Date <i className="fa-solid fa-arrow-down-9-1"></i>
+                            {props.filters.sort_by == "release_date" && props.filters.sort_dir == "desc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
+                        </div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionPriceList" aria-expanded="false" aria-controls="accordionPriceList">Price Range</button>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionPriceList" aria-expanded="false" aria-controls="accordionPriceList"><b>Price Range</b></button>
                     </h2>
                     <div id="accordionPriceList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         {/* <div class="accordion-body pointer" onClick={() => { clickFilter({price_range:0}); }}>
@@ -105,7 +113,7 @@ const sortbar = (props) => {
                 </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionGameCategoryList" aria-expanded="false" aria-controls="accordionGameCategoryList">Game Category</button>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionGameCategoryList" aria-expanded="false" aria-controls="accordionGameCategoryList"><b>Game Category</b></button>
                     </h2>
                     <div id="accordionGameCategoryList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({game_category:"featured", sort_dir:""}); }}>
@@ -130,7 +138,7 @@ const sortbar = (props) => {
                 </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionEditionsList" aria-expanded="false" aria-controls="accordionEditionsList">Format</button>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionEditionsList" aria-expanded="false" aria-controls="accordionEditionsList"><b>Format</b></button>
                     </h2>
                     <div id="accordionEditionsList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({format:"digital"}); }}>
@@ -145,18 +153,8 @@ const sortbar = (props) => {
                     </div>
                 </div>
                 <div class="accordion-item">
-                    <div class="accordion-body pointer" onClick={() => { clickFilter({demo:true}); }}>
-                        Has Demo {props.filters.demo == true && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-body pointer" onClick={() => { clickFilter({sales:true}); }}>
-                        On Sale {props.filters.sales == true && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
-                    </div>
-                </div>
-                <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionPlatformList" aria-expanded="false" aria-controls="accordionPlatformList">System</button>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionPlatformList" aria-expanded="false" aria-controls="accordionPlatformList"><b>System</b></button>
                     </h2>
                     <div id="accordionPlatformList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({ console:"switch1"}); }}>
@@ -172,7 +170,7 @@ const sortbar = (props) => {
                 </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionAvailabilityList" aria-expanded="false" aria-controls="accordionAvailabilityList">Availability</button>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionAvailabilityList" aria-expanded="false" aria-controls="accordionAvailabilityList"><b>Availability</b></button>
                     </h2>
                     <div id="accordionAvailabilityList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({ availability:1}); }}>
@@ -187,6 +185,26 @@ const sortbar = (props) => {
                         <div class="accordion-body pointer" onClick={() => { clickFilter({ availability:4}); }}>
                             Pre-Order { props.filters.availability == 4 && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-body pointer" onClick={() => { clickFilter({demo:true}); }}>
+                        <b>Has Demo</b> {props.filters.demo == true && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-body pointer" onClick={() => { clickFilter({sales:true}); }}>
+                        <b>On Sale</b> {props.filters.sales == true && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-body pointer" onClick={() => { clickFilter({coming_soon:true}); }}>
+                        <b>Coming Soon</b> {props.filters.coming_soon == true && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-body pointer" onClick={() => { clickFilter({pre_order:true}); }}>
+                        <b>Pre Order</b> {props.filters.pre_order == true && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                     </div>
                 </div>
             </div>

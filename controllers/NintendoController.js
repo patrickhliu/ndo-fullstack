@@ -4,6 +4,9 @@ import { createRequire } from "module";
 const winston = require('winston');
 const { Sequelize, Op, DataTypes, Model } = require('sequelize');
 import sequelize from './../config/db.js';
+const imgPrefix = "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/";
+const videoPrefix = "https://assets.nintendo.com/video/upload/ar_16:9,w_1280/";
+const imgPlaceHolder = "https://place-hold.it/500x500/D3D3D3/111?text=No%20Image&fontsize=60";
 
 const logger = winston.createLogger({
     level: 'info', // Set the minimum level of messages to log (e.g., 'info', 'debug', 'error')
@@ -20,16 +23,17 @@ const logger = winston.createLogger({
 });
 
 const refactorPhotoObj = (obj) => {
-    return { src: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + obj.publicId, width:1280, height:720 };
+    return { src: imgPrefix + obj.publicId, width:1280, height:720 };
 }
 
 const refactorVideoObj = (obj) => {
     if(obj.resourceType != "video") return null;
-    return { src: "https://assets.nintendo.com/video/upload/ar_16:9,w_1280/" + obj.publicId, width:1280, height:720 }
+    return { src: videoPrefix + obj.publicId, width:1280, height:720 }
 }
 
 const refactorPhotoGallery = async (firstPhoto, gallery) => {
-    let output = [firstPhoto];
+    let output = firstPhoto ? [{ src: imgPrefix + firstPhoto, width:1280, height:720 }] : [{ src: imgPlaceHolder, width:1280, height:720 }];
+    if(!gallery) return output;
 
     for(let o of gallery) {
         if(o.resourceType != "image") continue;
@@ -42,6 +46,7 @@ const refactorPhotoGallery = async (firstPhoto, gallery) => {
 
 const refactorVideoGallery = async (gallery) => {
     let output = [];
+    if(!gallery) return output;
 
     for(let o of gallery) {
         if(o.resourceType != "video") continue;
@@ -89,6 +94,14 @@ export const getAll = async(req, res) => {
 
         if(queryFilters.sort_dir == "desc") {
             constraints.order = [['regular_price', 'DESC']]
+        }
+    }
+
+    if(queryFilters.sort_by == "release_date") {
+        constraints.order = [['release_date', 'ASC']]
+
+        if(queryFilters.sort_dir == "desc") {
+            constraints.order = [['release_date', 'DESC']]
         }
     }
 
@@ -145,6 +158,23 @@ console.log(queryFilters);
             sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Demo available"\'')), 1),
         ]);
     }
+
+    if(queryFilters.coming_soon) {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Coming soon"\'')), 1),
+        ]);
+    }
+
+    if(queryFilters.pre_order) {
+        if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
+
+        constraints.where[Op.and].push([
+            sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('availability'), sequelize.literal('\'"Pre-order"\'')), 1),
+        ]);
+    }
+
 
     if(queryFilters.format == "physical") {
         if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
@@ -269,9 +299,6 @@ console.log(queryFilters);
     //logger.info(JSON.stringify(dbResults));
 
     for(let o of dbResults) {
-        //console.log(o);
-        // "https://place-hold.it/500x500/D3D3D3/111?text=No%20Image&fontsize=60"
-
         const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
         const oneDay = 1000 * 60 * 60 * 24;
 
@@ -328,7 +355,7 @@ console.log(queryFilters);
             file_size: o.file_size,
             software_publisher: o.software_publisher,
             software_developer: o.software_developer,
-            photo_gallery: await refactorPhotoGallery({src: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + o.product_image, width:1280, height:720 }, o.product_gallery),
+            photo_gallery: await refactorPhotoGallery(o.product_image, o.product_gallery),
             video_gallery: await refactorVideoGallery(o.product_gallery),
             url: o.url,
             url_key: o.url_key,
@@ -386,7 +413,7 @@ console.log(queryFilters);
                     percent_off: r.percent_off,
                     platform_code: r.platform_code,
                     url: r.url,
-                    photo_gallery: await refactorPhotoGallery({src: "https://assets.nintendo.com/image/upload/ar_16:9,w_1280/" + r.product_image, width:1280, height:720 }, r.product_gallery),
+                    photo_gallery: await refactorPhotoGallery(o.product_image, o.product_gallery),
                     video_gallery: await refactorVideoGallery(r.product_gallery),
                     file_size: r.file_size,
                 });
