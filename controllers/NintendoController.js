@@ -118,7 +118,9 @@ export const getAll = async(req, res) => {
     } else if(queryFilters.price_range == 5) {
         // "all"
     }
-console.log(queryFilters);
+
+    // console.log(queryFilters);
+
     if(queryFilters.game_category == "games") {
         /* if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
 
@@ -200,7 +202,7 @@ console.log(queryFilters);
         constraints.where.platform_code = { [Op.eq]: "NINTENDO_SWITCH_2" };
     }
 
-    console.log(queryFilters.availability);
+    //console.log(queryFilters.availability);
 
     if(queryFilters.availability == 1) {
         if(!constraints.where[Op.and]) constraints.where[Op.and] = [];
@@ -228,8 +230,8 @@ console.log(queryFilters);
         ]);
     }
 
-    console.log('-----------------------');
-    console.log(constraints);
+    //console.log('-----------------------');
+    //console.log(constraints);
 
     let dbResults = await NintendoGame.findAll(constraints);
 
@@ -237,7 +239,7 @@ console.log(queryFilters);
     delete constraints.limit;
     let dbResultsCount = await NintendoGame.count(constraints);
 
-    console.log(dbResultsCount);
+    //console.log(dbResultsCount);
 
     /* let dbResults = await NintendoGame.findAll({
         where: sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('top_level_filters'), sequelize.literal('\'"Upgrade pack"\'')), 1)
@@ -376,7 +378,7 @@ console.log(queryFilters);
             let urlKeyArr = o.url_key.split("-");
             let tmpKey = urlKeyArr.slice(0, 3);
             tmpKey = tmpKey.join("-");
-            console.log(tmpKey);
+            //console.log(tmpKey);
 
             //let records
             let records = await NintendoGame.findAll({

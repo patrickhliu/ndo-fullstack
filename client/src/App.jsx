@@ -53,7 +53,7 @@ function App() {
         //console.log("execute search...", {query:query, currentPage:currentPage, filters:filters});
 
         try {
-            const response = await axios("http://localhost:8080/nintendo/all?q=" + query + "&current_page=" + currentPage + "&filters=" + JSON.stringify(filters));
+            const response = await axios("/nintendo/all?q=" + query + "&current_page=" + currentPage + "&filters=" + JSON.stringify(filters));
             //console.log(response.data);
             if(currentPage == 1) {
                 setResGames([].concat(response.data.games));
