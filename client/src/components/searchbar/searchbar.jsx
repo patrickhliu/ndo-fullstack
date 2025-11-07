@@ -18,6 +18,14 @@ function searchbar(props) {
         props.sendToParent({query:query, filters:filters});
     }
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            console.log('Enter key pressed! Input value:');
+            search();
+            // Perform desired action, e.g., submit a form, send a message
+        }
+    };
+
     function dataFromSortBar(data) {
         setFilters(data);
     }
@@ -31,8 +39,8 @@ function searchbar(props) {
             <Col></Col>
             <Col xs={4}>
                 <InputGroup>
-                    <Form.Control placeholder="Search..." onChange={(e) => setQuery(e.target.value)} value={query}/>
-                    <Button className="bg-steel-blue" onClick={search}>Search</Button>
+                    <Form.Control placeholder="Search..." onChange={(e) => setQuery(e.target.value)} value={query} onKeyPress={handleKeyPress}/>
+                    <Button className="bg-steel-blue" onClick={search}><b>Search</b></Button>
                 </InputGroup>
             </Col>
             <Col xs={2}>

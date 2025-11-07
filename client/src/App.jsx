@@ -15,6 +15,7 @@ function App() {
     let [currentPage, setCurrentPage] = useState(1);
     const [resGames, setResGames] = useState([]);
     const [hasMore, setHasMore] = useState(false);
+    const [loading, setLoading] = useState(false);
     const { measureRef, isIntersecting, observer } = useOnScreen();
 
     useEffect(() => {
@@ -51,10 +52,13 @@ function App() {
 
     async function executeSearch() {
         //console.log("execute search...", {query:query, currentPage:currentPage, filters:filters});
+        setLoading(true);
 
         try {
             const response = await axios("/nintendo/all?q=" + query + "&current_page=" + currentPage + "&filters=" + JSON.stringify(filters));
             //console.log(response.data);
+            setLoading(false);
+
             if(currentPage == 1) {
                 setResGames([].concat(response.data.games));
             } else {
@@ -79,11 +83,23 @@ function App() {
 
     return (
         <>
-            <div className="" style={{ position:"fixed", top:"0", left:"0", width:"100vw", zIndex:"100", padding:"20px", backgroundColor:"#36454F" }}>
+            <div className="text-center" style={{ position:"fixed", top:"0", left:"0", width:"100vw", zIndex:"100", padding:"20px", backgroundColor:"#36454F" }}>
+                <p className="m-0 p-0 mb-3" style={{ color:"#fff" }}><b>eShop Scraper Project</b></p>
                 <Searchbar sendToParent={dataFromSearchBar} query={query} filters={filters}></Searchbar>
             </div>
-            <div className="col-lg-10 offset-lg-1 hide-scroll" id="scroll-container" style={{ margin:"100px auto", minHeight: '100vh', overflowY: 'scroll' }}>
+            { loading &&
+            <div className="spinner-container">
+                    <div className="spinner">
+                        <div className="bounce1"></div>
+                        <div className="bounce2"></div>
+                        <div className="bounce3"></div>
+                    </div>
+                    </div>
+
+            }
+            { !loading && <div className="hide-scroll flex-center col-lg-10 offset-lg-1" style={{ margin:"100px auto", minHeight: "100vh", overflowY: "scroll" }}>
                 { resGames.map((resGame, index) => {
+                    /* return <div>{resGame.title}</div> */
                     if (index === resGames.length - 1) {
                         return (
                             <GameCard mesureRef={measureRef} index={index} game={resGame}/>
@@ -91,7 +107,7 @@ function App() {
                     }
                     return <GameCard key={index} game={resGame}/>
                 })}
-            </div>
+            </div> }
         </>
     );
 }

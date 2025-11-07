@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import $ from 'jquery';
 
 const sortbar = (props) => {
     let cloneFilters = { ...props.filters };
@@ -11,7 +12,7 @@ const sortbar = (props) => {
 
         const promise = new Promise((resolve, reject) => {
             Object.keys(obj).forEach(key => {
-                //console.log(`Key: ${key}, Value: ${obj[key]}`);
+                console.log(`Key: ${key}, Value: ${obj[key]}`);
                 if([].indexOf(key) >= 0) {
                     if(obj[key]) {
                         if(cloneFilters[key].includes(obj[key])) {
@@ -34,6 +35,10 @@ const sortbar = (props) => {
                 } else {
                     cloneFilters[key] = obj[key]
                 }
+
+                if(key == "sort_by" && obj[key] == "discount") {
+                    cloneFilters.sales = true;
+                }
             });
 
             resolve(cloneFilters);
@@ -46,10 +51,10 @@ const sortbar = (props) => {
 
     return (
     <>
-    <button class="btn bg-steel-blue" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">Filter + Sort</button>
+    <button class="btn bg-steel-blue" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters"><b>Filter + Sort</b></button>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasFiltersLabel">Filter + Sort</h5>
+            <h5 class="offcanvas-title" id="offcanvasFiltersLabel"><b>Filter + Sort</b></h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -57,7 +62,7 @@ const sortbar = (props) => {
             <div class="accordion" id="accordionDiv">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionSortByList" aria-expanded="false" aria-controls="accordionSortByList"><b>Sort By</b></button>
+                        <button class="btn btn-primary accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionSortByList" aria-expanded="false" aria-controls="accordionSortByList"><b>Sort By</b></button>
                     </h2>
                     <div id="accordionSortByList" class="accordion-collapse collapse hide" data-bs-parent="#accordionDiv">
                         <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"title", sort_dir:"asc"}); }}>
@@ -75,6 +80,14 @@ const sortbar = (props) => {
                         <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"price", sort_dir:"desc"}); }}>
                             Price <i className="fa-solid fa-arrow-down-9-1"></i>
                             {props.filters.sort_by == "price" && props.filters.sort_dir == "desc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
+                        </div>
+                        <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"discount", sort_dir:"asc"}); }}>
+                            Discount <i className="fa-solid fa-arrow-down-1-9"></i>
+                            {props.filters.sort_by == "discount" && props.filters.sort_dir == "asc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
+                        </div>
+                        <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"discount", sort_dir:"desc"}); }}>
+                            Discount <i className="fa-solid fa-arrow-down-9-1"></i>
+                            {props.filters.sort_by == "discount" && props.filters.sort_dir == "desc" && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                         </div>
                         <div class="accordion-body pointer" onClick={() => { clickFilter({sort_by:"release_date", sort_dir:"asc"}); }}>
                             Release Date <i className="fa-solid fa-arrow-down-1-9"></i>
@@ -188,7 +201,7 @@ const sortbar = (props) => {
                     </div>
                 </div>
                 <div class="accordion-item">
-                    <div class="accordion-body pointer" onClick={() => { clickFilter({demo:true}); }}>
+                    <div class="accordion-body accordion-single pointer" onClick={() => { clickFilter({demo:true}); }}>
                         <b>Has Demo</b> {props.filters.demo == true && <i className="mt-1 fa-regular fa-circle-check float-end forest-green"></i>}
                     </div>
                 </div>

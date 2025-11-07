@@ -11,12 +11,12 @@ function gameCard({ mesureRef, game, index}) {
     //console.log(game);
 
     return (
-    <Card index={index} className={ index % 3 == 0 ? "col-lg-3 my-3 d-inline-block" : "col-lg-3 offset-lg-1 my-3 d-inline-block"} ref={mesureRef}>
+    <Card index={index} className="h-25 me-3 my-3" style={{ width:"20%" }}ref={mesureRef}>
         <Card.Title className="bg-cherry m-0 p-0 py-2" style={{ margin:0 }}>
-            <p className="m-0 p-0 py-2 ms-2 d-inline-block font-16 w-100 text-truncate text-nowrap"><b>{game.title}</b></p>
+            <p className="m-0 p-0 py-2 ms-2 d-inline-block font-16 w-100 text-truncate text-wrap"><b>{game.title}</b></p>
         </Card.Title>
         <Card.Body>
-            { game.photo_gallery.length == 1 && <><img src={game.photo_gallery[0].src} className="w-100" /><div style={{ height:"70px" }}></div></> }
+            { game.photo_gallery.length == 1 && <><img src={game.photo_gallery[0].src} className="w-100" /></> }
             { game.photo_gallery.length > 1 && <PhotoGallery photos={game.photo_gallery}></PhotoGallery> }
             <div>
                 { game.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-14 mt-2 me-2 bg-cherry py-2 px-2" style={{ border:"none" }}>
@@ -26,7 +26,7 @@ function gameCard({ mesureRef, game, index}) {
                     <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-2-system-123669/" style={{ textDecoration:"none", color:"#D2042D"}}><b>Switch 2</b></a>
                 </Badge> }
 
-                <Badge className="font-14 mt-2 me-2 bg-steel-blue py-2 px-2" style={{ border:"none" }}>
+                <Badge className="font-14 mt-2 me-2 bg-cherry py-2 px-2" style={{ border:"none" }}>
                     <a target="_blank" href={"https://www.nintendo.com/" + game.url} style={{ textDecoration:"none", color:"#fff"}}><b>eShop</b></a>
                 </Badge>
 
@@ -49,7 +49,7 @@ function gameCard({ mesureRef, game, index}) {
                     <span style={{ textDecoration: 'line-through' }}>${game.regular_price}</span>
                     <span className="ms-2">${game.sale_price}</span>
                     <i class="fa-regular fa-circle-down ms-2"></i><span>{game.discount_percent}%</span>
-                    <span className="ms-2">(Expires {game.discount_ends} Days)</span>
+                    <span className="ms-2">(Expires In {game.discount_ends} Days)</span>
                 </Badge> }
                 <br/>
                 {/*

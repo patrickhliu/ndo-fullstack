@@ -97,6 +97,14 @@ export const getAll = async(req, res) => {
         }
     }
 
+    if(queryFilters.sort_by == "discount") {
+        constraints.order = [['percent_off', 'ASC']]
+
+        if(queryFilters.sort_dir == "desc") {
+            constraints.order = [['percent_off', 'DESC']]
+        }
+    }
+
     if(queryFilters.sort_by == "release_date") {
         constraints.order = [['release_date', 'ASC']]
 
