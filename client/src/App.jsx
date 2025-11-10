@@ -97,7 +97,7 @@ function App() {
                     </div>
 
             }
-            { !loading && <div className="hide-scroll flex-center col-lg-10 offset-lg-1" style={{ margin:"100px auto", minHeight: "100vh", overflowY: "scroll" }}>
+            { <div className="hide-scroll flex-center col-lg-10 offset-lg-1" style={{ margin:"100px auto", minHeight: "100vh", overflowY: "scroll" }}>
                 { resGames.map((resGame, index) => {
                     /* return <div>{resGame.title}</div> */
                     if (index === resGames.length - 1) {
