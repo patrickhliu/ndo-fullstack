@@ -30,6 +30,10 @@ function searchbar(props) {
         setFilters(data);
     }
 
+    function clear () {
+        setFilters({sort_by:"", sort_dir:"", game_category:[], sales:false, demo:false, format:"", console:"", availability:[], price_range:0});
+    }
+
     return (
         <>
         <Row>
@@ -44,7 +48,7 @@ function searchbar(props) {
                 </InputGroup>
             </Col>
             <Col xs={2}>
-                <Sortbar sendToParent={dataFromSortBar} filters={filters} gameCategoryCount={props.gameCategoryCount}></Sortbar>
+                <Sortbar sendToParent={dataFromSortBar} clearFilter={clear} filters={filters} gameCategoryCount={props.gameCategoryCount}></Sortbar>
             </Col>
             <Col></Col>
             <Col></Col>

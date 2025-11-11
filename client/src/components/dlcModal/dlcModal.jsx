@@ -15,16 +15,16 @@ function dlcModal({ game }) {
             <b>DLC ({game.dlc_data.length })</b>
         </Badge>
 
-        <div class="modal fade" id={"dlc-modal-" + game.nsuid} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="modal-title font-18" id="exampleModalLabel">DLC: { game.title }</span>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div className="modal fade" id={"dlc-modal-" + game.nsuid} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-xl">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <span className="modal-title font-18" id="exampleModalLabel"><b>DLC: { game.title }</b></span>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div className="modal-body" style={{ maxHeight:"600px", overflowY:"scroll" }}>
                         { game.dlc_data.map(d => (
-                            <div class="row" key={d.id}>
+                            <div className="row mb-3" key={d.id}>
                                 { d.photo_gallery.length == 1 &&
                                     <div className="col-lg-6">
                                         <img src={d.photo_gallery[0].src} className="w-100" />
@@ -36,13 +36,12 @@ function dlcModal({ game }) {
                                 </div>
                                 }
                                 <div className="col-lg-6">
-                                    <a class="font-16 me-2" target="_blank" href={"https://www.nintendo.com/" + d.url} style={{ textDecoration:"none", color:"#111"}}>
+                                    <a className="font-16 me-2" target="_blank" href={"https://www.nintendo.com/" + d.url} style={{ textDecoration:"none", color:"#111"}}>
                                         <b>{d.title}</b>
                                     </a>
                                     <br/>
                                     { d.platform_code == "NINTENDO_SWITCH"   && <Badge className="font-14 mt-2 me-2 bg-cherry py-2 px-2" style={{ border:"none" }}>
-                                        <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/" style={{ textDecoration:"none", color:"#D2042D"}}><b>Switch</b></a>
-                                        <b>Switch</b>
+                                        <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/" style={{ textDecoration:"none", color:"#fff"}}><b>Switch</b></a>
                                     </Badge> }
                                     { d.platform_code == "NINTENDO_SWITCH_2" && <Badge className="font-14 mt-2 me-2 bg-cherry-inv-br py-2 px-2" style={{ border:"none" }}>
                                         <a target="_blank" href="https://www.nintendo.com/us/store/products/nintendo-switch-2-system-123669/" style={{ textDecoration:"none", color:"#D2042D"}}><b>Switch 2</b></a>
@@ -72,9 +71,9 @@ function dlcModal({ game }) {
                             </div>
                         ))}
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        {/* <button type="button" class="btn btn-primary">Save changes</button> */}
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {/* <button type="button" className="btn btn-primary">Save changes</button> */}
                     </div>
                 </div>
             </div>

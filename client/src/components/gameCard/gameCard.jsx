@@ -11,7 +11,7 @@ function gameCard({ mesureRef, game, index}) {
     //console.log(game);
 
     return (
-    <Card index={index} className="h-25 me-3 my-3" style={{ width:"20%" }}ref={mesureRef}>
+    <Card index={index} className="h-25 me-3 mt-5" style={{ width:"20%" }}ref={mesureRef}>
         <Card.Title className="bg-cherry m-0 p-0 py-2" style={{ margin:0 }}>
             <p className="m-0 p-0 py-2 ms-2 d-inline-block font-16 w-100 text-truncate text-wrap"><b>{game.title}</b></p>
         </Card.Title>
@@ -37,7 +37,7 @@ function gameCard({ mesureRef, game, index}) {
                 )}
 
                 {/* <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-heart me-3"></i></p> */}
-                {/* <p className="float-end m-0 p-0 py-2"><i class="fa-regular fa-note-sticky me-3"></i></p> */}
+                {/* <p className="float-end m-0 p-0 py-2"><i className="fa-regular fa-note-sticky me-3"></i></p> */}
                 {/* { game.is_dlc_content && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Stand Alone DLC</Badge> } */}
                 {/* { game.is_dlc_available && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">DLC Available</Badge> } */}
                 {/* { game.is_upgrade && <Badge className="font-14 mt-2 me-3 d-inline-block" bg="info">Upgrade Pack</Badge> } */}
@@ -48,7 +48,7 @@ function gameCard({ mesureRef, game, index}) {
                 { game.sale_price && game.regular_price && <Badge className="font-14 mt-2 me-2 d-inline-block" bg="khaki-br">
                     <span style={{ textDecoration: 'line-through' }}>${game.regular_price}</span>
                     <span className="ms-2">${game.sale_price}</span>
-                    <i class="fa-regular fa-circle-down ms-2"></i><span>{game.discount_percent}%</span>
+                    <i className="fa-regular fa-circle-down ms-2"></i><span>{game.discount_percent}%</span>
                     <span className="ms-2">(Expires In {game.discount_ends} Days)</span>
                 </Badge> }
                 <br/>

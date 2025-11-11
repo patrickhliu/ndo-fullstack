@@ -44,7 +44,7 @@ function photoGallery(props) {
                     <img src={p.src} className="w-100 pointer m-0 p-0"></img>
                     <div className={isHovering ? "w-100 h-100 m-0 p-0 pointer flex-center" : "w-100 h-100 m-0 p-0 pointer visually-hidden flex-center"}
                         style={{ position:"absolute", top:0, left:0, backgroundColor:"rgba(128, 128, 128, 0.5)" }} onClick={() => setIsOpen(true)}>
-                        <i class="fa-solid fa-magnifying-glass fa-5x"></i>
+                        <i className="fa-solid fa-magnifying-glass fa-5x"></i>
                     </div>
                 </SwiperSlide>
             ))}
@@ -66,7 +66,7 @@ function photoGallery(props) {
                 <img src={p.src} className="w-100 pointer m-0 p-0"></img>
                 <div className="w-100 h-100 m-0 p-0 pointer visually-hidden flex-center"
                     style={{ position:"absolute", top:0, left:0, backgroundColor:"rgba(128, 128, 128, 0.5)" }} onClick={() => setIsOpen(true)}>
-                    <i class="fa-solid fa-magnifying-glass fa-5x"></i>
+                    <i className="fa-solid fa-magnifying-glass fa-5x"></i>
                 </div>
             </SwiperSlide>
         ))}
