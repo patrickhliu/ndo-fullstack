@@ -8,5 +8,6 @@ const router = express.Router();
 
 router.get('/nintendo/all', NintendoController.getAll);
 router.get('/walmart/all', WalmartController.getAll);
+router.post('/ebay/account/delete', NintendoController.ebayAccountDelete);
 
 export default router;
