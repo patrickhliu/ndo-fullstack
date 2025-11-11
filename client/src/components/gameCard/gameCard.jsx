@@ -5,6 +5,7 @@ import '../../assets/pat.scss';
 import PhotoGallery from '../photoGallery/photoGallery';
 import VideoSideBar from '../../components/videoSideBar/videoSideBar';
 import DlcModal from '../../components/dlcModal/dlcModal';
+import EbayModal from '../../components/ebayModal/ebayModal';
 import Button from 'react-bootstrap/Button';
 
 function gameCard({ mesureRef, game, index}) {
@@ -31,6 +32,8 @@ function gameCard({ mesureRef, game, index}) {
                 </Badge>
 
                 { game.video_gallery.length > 0 && <VideoSideBar obj={game}></VideoSideBar> }
+
+                <EbayModal obj={game}></EbayModal>
 
                 { game.is_dlc_available && game.dlc_data.length > 0 && (
                     <DlcModal game={game}></DlcModal>

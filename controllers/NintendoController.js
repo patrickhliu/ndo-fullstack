@@ -57,11 +57,6 @@ const refactorVideoGallery = async (gallery) => {
     return output;
 }
 
-export const ebayAccountDelete = (req, res) => {
-    console.log("ebay account delete", req);
-    logger.info(req);
-}
-
 export const getAll = async(req, res) => {
     // Logic to fetch all users from a database or other source
     //res.status(200).json({ message: 'Getting all users' });
