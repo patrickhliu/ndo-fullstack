@@ -33,7 +33,7 @@ function gameCard({ mesureRef, game, index}) {
 
                 { game.video_gallery.length > 0 && <VideoSideBar obj={game}></VideoSideBar> }
 
-                {/* <EbayModal obj={game}></EbayModal> */}
+
 
                 { game.is_dlc_available && game.dlc_data.length > 0 && (
                     <DlcModal game={game}></DlcModal>

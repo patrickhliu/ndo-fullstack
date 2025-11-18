@@ -15,6 +15,7 @@ function ebayModal() {
     }
 
     async function executeEbaySearch() {
+        return;
         //console.log("execute search...", {query:query, currentPage:currentPage, filters:filters});
         setLoading(true);
 
