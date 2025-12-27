@@ -15,7 +15,7 @@ function dlcModal({ game }) {
             <b>DLC ({game.dlc_data.length })</b>
         </Badge>
 
-        <div className="modal fade" id={"dlc-modal-" + game.nsuid} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id={"dlc-modal-" + game.nsuid} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-xl">
                 <div className="modal-content">
                     <div className="modal-header">

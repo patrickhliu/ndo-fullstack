@@ -54,7 +54,7 @@ const sortbar = (props) => {
     <button className="btn bg-steel-blue" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">
         <b>Filter + Sort</b>
     </button>
-    <div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
+    <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
         <div className="offcanvas-header">
             <h5 className="offcanvas-title" id="offcanvasFiltersLabel">
                 <b>Filter + Sort</b>

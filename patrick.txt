@@ -1,0 +1,4 @@
+localhost
+    - no need to run anything in /client
+    - go to root, run "node server.js"
+    - go to "http://localhost:8080/" in web browser
